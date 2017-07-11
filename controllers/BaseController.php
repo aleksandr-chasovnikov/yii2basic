@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace app\controllers;
 
 use Yii;
 use app\models\ImageUpload;
@@ -13,8 +13,11 @@ use yii\web\UploadedFile;
 use yii\helpers\ArrayHelper;
 use app\models\Category;
 
-abstract class AdminBaseController extends Controller
+abstract class BaseController extends Controller
 {
+    // Содержит имя модели
+    public $model;
+
     /**
      * @inheritdoc
      */
@@ -31,11 +34,27 @@ abstract class AdminBaseController extends Controller
     }
 
     /**
-     * Lists all Article models.
+     * Задает имя модели
+     */
+    public function __construct($className, $id, $module, $config = [])
+    {
+        $name_model =  explode('C', baseName($className));
+
+        $this->model = 'app\models\\' . $name_model[0];
+
+        parent::__construct($id, $module, $config);
+    }
+
+    /**
+     * Список записей
      * @return mixed
      */
-    public function actionIndex($searchModel)
+    public function actionIndex()
     {
+        $nameModel = $this->model . 'Search';
+
+        $searchModel = new $nameModel;
+
         $dataProvider = $searchModel->search( Yii::$app->request->queryParams);
 
         return $this->render( 'index', [
@@ -49,8 +68,10 @@ abstract class AdminBaseController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($model_empty, $id)
+    public function actionView($id)
     {
+        $model_empty = new $this->model;
+
         return $this->render('view', [
             'model' => $this->findModel($model_empty, $id),
         ]);
@@ -62,11 +83,11 @@ abstract class AdminBaseController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionSave($model_empty, $id = null)
+    public function actionUpdate( $id = null)
     {
     	if ( !Yii::$app->request->post() && !empty($id)) {
 
-	        $model = $this->findModel($model_empty, $id);
+	        $model = $this->findModel( $id);
 
 	    } else {
 
@@ -86,8 +107,10 @@ abstract class AdminBaseController extends Controller
     /**
      * Выборка из БД
      */
-    public function findModel($model_empty, $id)
+    public function findModel( $id)
     {
+        $model_empty = $this->model;
+
         if (!empty($model = $model_empty::findOne($id)) ) {
 
             return $model;
@@ -103,9 +126,9 @@ abstract class AdminBaseController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($model_empty, $id)
+    public function actionDelete( $id)
     {
-        $this->findModel($model_empty, $id)->delete();
+        $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }

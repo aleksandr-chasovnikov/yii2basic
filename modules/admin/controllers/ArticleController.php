@@ -12,48 +12,19 @@ use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 use yii\helpers\ArrayHelper;
 use app\models\Category;
+use app\controllers\BaseController;
 
 /**
  * ArticleController implements the CRUD actions for Article model.
  */
-class ArticleController extends AdminBaseController
+class ArticleController extends BaseController
 {
     /**
-     * Список всех записей
-     * @return mixed
+     * Задает имя модели
      */
-    public function actionIndex()
+    public function __construct($id, $module, $config = [])
     {
-        return parent::actionIndex( new ArticleSearch() );
-    }
-
-    /**
-     * Показать одну запись.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {
-        return parent::actionView( new Article, $id);
-    }
-
-    /**
-     * Создать или обновить запись
-     * @return mixed
-     */
-    public function actionUpdate($id = null)
-    {
-        return parent::actionSave( new Article, $id);
-    }
-
-    /**
-     * Удалить запись
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionDelete($id)
-    {
-        return parent::actionDelete(new Article, $id);
+        parent::__construct(__CLASS__, $id, $module, $config);
     }
 
     /**
