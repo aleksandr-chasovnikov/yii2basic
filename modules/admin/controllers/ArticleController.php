@@ -4,20 +4,14 @@ namespace app\modules\admin\controllers;
 
 use Yii;
 use app\models\ImageUpload;
-use app\models\Article;
-use app\models\ArticleSearch;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 use yii\helpers\ArrayHelper;
 use app\models\Category;
-use app\controllers\BaseController;
 
 /**
  * ArticleController implements the CRUD actions for Article model.
  */
-class ArticleController extends BaseController
+class ArticleController extends \app\controllers\BaseController
 {
     /**
      * Задает имя модели
@@ -37,7 +31,7 @@ class ArticleController extends BaseController
         if (Yii::$app->request->isPost) {
 
             //вытаскиваем данные из БД
-            $article = $this->findModel(new Article, $id);
+            $article = $this->findModel($id);
 
             //загружаеи файл
             $file = UploadedFile::getInstance($model, 'image');
@@ -57,7 +51,7 @@ class ArticleController extends BaseController
     public function actionSetCategory($id)
     {
         // Выборка из БД
-        $article = $this->findModel(new Article, $id);
+        $article = $this->findModel($id);
 
         // getCategory() == category (особенность Yii2)
         $selectedCategory = $article->category->id;

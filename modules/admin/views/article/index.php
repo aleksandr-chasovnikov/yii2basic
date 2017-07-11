@@ -28,6 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'title',
             'description:ntext',
             'content:ntext',
+            'category_id',
             'date',
             [
                 'format' => 'html',

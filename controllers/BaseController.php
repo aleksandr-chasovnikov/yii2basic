@@ -12,6 +12,9 @@ use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 use yii\helpers\ArrayHelper;
 use app\models\Category;
+use app\models\CategorySearch;
+use app\models\Tag;
+use app\models\TagSearch;
 
 abstract class BaseController extends Controller
 {
@@ -34,11 +37,11 @@ abstract class BaseController extends Controller
     }
 
     /**
-     * Задает имя модели
+     * Задает имя модели от имени контроллера
      */
-    public function __construct($className, $id, $module, $config = [])
+    public function __construct($controller, $id, $module, $config = [])
     {
-        $name_model =  explode('C', baseName($className));
+        $name_model =  explode('C', baseName($controller));
 
         $this->model = 'app\models\\' . $name_model[0];
 
@@ -73,35 +76,34 @@ abstract class BaseController extends Controller
         $model_empty = new $this->model;
 
         return $this->render('view', [
-            'model' => $this->findModel($model_empty, $id),
+            'model' => $this->findModel($id),
         ]);
     }
 
     /**
-     * 
-     * @param integer $view
+     * Сохраняет или изменяет запись
      * @param integer $id
      * @return mixed
      */
     public function actionUpdate( $id = null)
     {
+        // Если $_POST пуст и не пусто $id, то получаем выборку из БД
     	if ( !Yii::$app->request->post() && !empty($id)) {
 
-	        $model = $this->findModel( $id);
+	        $model = $this->findModel($id);
 
 	    } else {
 
-	    	$model = $model_empty;
+	    	$model = new $this->model;
 	    }
+
 
         if ( $model->load(Yii::$app->request->post()) && $model->save()) {
 
             return $this->redirect(['view', 'id' => $model->id]);
-
-        } else {
-
-            return $this->render('update', compact('model'));
         }
+
+            return $this->render('update', compact('model'));        
     }
 
     /**
