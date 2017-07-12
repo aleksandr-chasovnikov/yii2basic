@@ -7,6 +7,7 @@ use app\models\ImageUpload;
 use yii\web\UploadedFile;
 use yii\helpers\ArrayHelper;
 use app\models\Category;
+use app\models\Tag;
 
 /**
  * ArticleController implements the CRUD actions for Article model.
@@ -76,4 +77,30 @@ class ArticleController extends \app\controllers\BaseController
         return $this->render('category', compact('article', 'selectedCategory', 'categories'));
     }
 
+    /**
+     * 
+     */
+    public function actionSetTags($id)
+    {
+        //получает данные из БД
+        $article = $this->findModel($id);
+
+        // получает выбранныый тэг
+        $selectedTags = $article->getSelectedTags();
+
+        // получает данные тэгов из БД
+        $tags = ArrayHelper::map( Tag::find()->all(), 'id', 'title');
+
+        if ( Yii::$app->request->isPost)
+        {
+            // Вытаскивае данные из $_POST
+            $tags = Yii::$app->request->post('tags');
+            // Сохраняем данные в БД
+            $article->saveTags($tags);
+
+            return $this->redirect(['view', 'id' => $article->id]);
+        }
+
+        return $this->render('tags', compact('selectedTags', 'tags'));
+    }
 }

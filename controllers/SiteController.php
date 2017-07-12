@@ -9,6 +9,9 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\Article;
+use app\models\Category;
+use yii\data\Pagination;
 
 class SiteController extends Controller
 {
@@ -55,13 +58,72 @@ class SiteController extends Controller
     }
 
     /**
-     * Displays homepage.
+     * Покажет главную
      *
-     * @return string
+     * @return Response|string
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        // build a DB query to get all articles with status = 1
+        $query = Article::find();
+
+        // get the total number of articles (but do not fetch the article data yet)
+        $count = $query->count();
+
+        // create a pagination object with the total count
+        $pagination = new Pagination(['totalCount' => $count, 'pageSize' => 7]);
+
+        // limit the query using the pagination and retrieve the articles
+        $articles = $query->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
+
+        $result = Article::getSideBar() + compact('articles', 'pagination');
+
+        return $this->render('index', $result);
+    }
+
+    /**
+     * Показывает одну статью
+     *
+     * @return Response|string
+     */
+    public function actionView($id)
+    {
+        $article = Article::findOne($id);
+        $result = Article::getSideBar() + compact('article');
+
+        return $this->render('single', $result);
+    }
+
+    /**
+     * @return Response|string
+     */
+    public function actionCategory($id)
+    {
+        // build a DB query to get all articles with status = 1
+        $query = Article::find()->where(['category_id'=> $id]);
+
+        // get the total number of articles (but do not fetch the article data yet)
+        $count = $query->count();
+
+        // create a pagination object with the total count
+        $pagination = new Pagination(['totalCount' => $count, 'pageSize' => 7]);
+
+        // limit the query using the pagination and retrieve the articles
+        $articles = $query->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
+
+        $categoryOne = Category::findOne($id);
+
+        $result = Article::getSideBar() + compact(
+                'articles', 
+                'pagination',
+                'categoryOne' 
+            );
+
+        return $this->render('index', $result);
     }
 
     /**
@@ -104,6 +166,7 @@ class SiteController extends Controller
     public function actionContact()
     {
         $model = new ContactForm();
+
         if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
             Yii::$app->session->setFlash('contactFormSubmitted');
 

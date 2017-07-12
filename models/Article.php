@@ -4,6 +4,8 @@ namespace app\models;
 
 use Yii;
 use app\models\Category;
+use app\models\Tag;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "article".
@@ -134,8 +136,70 @@ class Article extends \yii\db\ActiveRecord
             $this->link('category', $category);
             
             return true;
+        }
+    }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTags()
+    {
+        return $this->hasMany(Tag::className(), ['id' => 'tag_id'])
+            ->viaTable('article_tag', ['article_id' => 'id']);
+    }
+
+    /**
+     * получает выбранныый тэг
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSelectedTags()
+    {
+       $selectedTags = $this->getTags()->select('id')->asArray()->all();
+
+       return ArrayHelper::getColumn($selectedTags, 'id');
+    }
+
+    /**
+     * Сохраняет тэги
+     */
+    public function saveTags($tags)
+    {
+        if ( is_array($tags)) {
+
+            // удаляет текущий тэг
+            ArticleTag::deleteAll(['article_id' => $this->id]);
+
+            foreach ($tags as $tag_id) {
+
+                $tag = Tag::findOne($tag_id);
+
+                // Устанавливает взаимосвязь между двумя моделями
+                $this->link('tags', $tag);
+            }
+        }
+    }
+
+    /**
+     * Получить дату
+     */
+    public function getDate()
+    {
+        Yii::$app->formatter->locale = 'ru-RU';
+
+        if ( Yii::$app->formatter->asDate($this->date) ) {
+
+            return Yii::$app->formatter->asDate($this->date);
         }
 
+        return false;
+    }
+
+    public static function getSideBar()
+    {
+        $popular = Article::find()->orderBy('viewed desc')->limit(3)->all();
+        $recent = Article::find()->orderBy('date desc')->limit(4)->all();
+        $categories = Category::find()->all();
+
+        return compact('popular', 'recent', 'categories');
     }
 }

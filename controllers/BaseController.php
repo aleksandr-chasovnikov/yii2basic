@@ -88,7 +88,7 @@ abstract class BaseController extends Controller
     public function actionUpdate( $id = null)
     {
         // Если $_POST пуст и не пусто $id, то получаем выборку из БД
-    	if ( !Yii::$app->request->post() && !empty($id)) {
+    	if ($id) {
 
 	        $model = $this->findModel($id);
 
