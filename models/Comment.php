@@ -68,4 +68,24 @@ class Comment extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
+
+    /**
+     * Получить форматированную дату
+     */
+    public function getDate($date = null)
+    {
+        // if ($date) {
+        //     $this->date = $date;
+        // }
+
+        // Yii::$app->formatter->locale = 'ru-RU';
+
+        // if ( Yii::$app->formatter->asDate($this->date) ) {
+
+            return Yii::$app->formatter->asDate($this->date);
+        // }
+
+        // return false;
+    }
+
 }

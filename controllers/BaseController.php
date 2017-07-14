@@ -41,7 +41,7 @@ abstract class BaseController extends Controller
      */
     public function __construct($controller, $id, $module, $config = [])
     {
-        $name_model =  explode('C', baseName($controller));
+        $name_model =  explode('Controller', baseName($controller));
 
         $this->model = 'app\models\\' . $name_model[0];
 
@@ -57,13 +57,14 @@ abstract class BaseController extends Controller
         $nameModel = $this->model . 'Search';
 
         $searchModel = new $nameModel;
-
+        
         $dataProvider = $searchModel->search( Yii::$app->request->queryParams);
 
         return $this->render( 'index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+
     }
 
     /**

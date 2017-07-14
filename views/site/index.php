@@ -8,7 +8,7 @@ use yii\helpers\Url;
 
 <div id="large-header" class="large-header">
   <canvas id="demo-canvas"></canvas>
-  <h1 class="main-title"><a class="link link--takiri" href="index.html">Go Easy On<span class="wow fadeInUp animated animated" data-wow-delay=".5s">Люби жизнь такой, какая она есть (&copy;)</span></a></h1>
+  <h1 class="main-title"><a class="link link--takiri" href="#iakor">Go Easy On<span class="wow fadeInUp animated animated" data-wow-delay=".5s">Люби жизнь такой, какая она есть (&copy;)</span></a></h1>
 
 </div>
 
@@ -38,7 +38,7 @@ use yii\helpers\Url;
           <div class="blog-left">
 
             <div class="blog-left-left wow fadeInRight animated animated" data-wow-delay=".5s">
-              <p>Статья от <a href="#">Admin</a> &nbsp;&nbsp; <?= $article->getDate() ?> &nbsp;&nbsp; <a href="#">Comments (10)</a></p>
+              <p>Статья от <a name="iakor" href="#">Admin</a> &nbsp;&nbsp; <?= $article->getDate() ?> &nbsp;&nbsp; <a href="#">Comments (10)</a></p>
               <a href="<?= Url::toRoute(['site/view', 'id' => $article->id]) ?>"><img src="<?= $article->getImage(); ?>" alt="image" /></a>
             </div>
 
@@ -74,7 +74,7 @@ use yii\helpers\Url;
             <?php foreach($categories as $category): ?>
 
               <li class="wow fadeInLeft animated animated" data-wow-delay=".5s">
-              <a href="<?= Url::toRoute(['site/category', 'id' => $category->id]) ?>"><?= $category->title ?></a>
+              <a href="<?= Url::toRoute(['/', 'id' => $category->id]) ?>"><?= $category->title ?></a>
                 <span class="post-count pull-right">(<?= $category->getArticles()->count() ?>)</span>
               </li>
 

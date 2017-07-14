@@ -9,12 +9,15 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\CommentForm;
 use app\models\Article;
 use app\models\Category;
 use yii\data\Pagination;
 
 class SiteController extends Controller
 {
+    const PAGE_SIZE = 7;
+
     /**
      * @inheritdoc
      */
@@ -58,27 +61,40 @@ class SiteController extends Controller
     }
 
     /**
-     * Покажет главную
-     *
      * @return Response|string
      */
-    public function actionIndex()
+    public function actionIndex($id = null)
     {
-        // build a DB query to get all articles with status = 1
-        $query = Article::find();
+        if ($id) {
 
-        // get the total number of articles (but do not fetch the article data yet)
+            $query = Article::find()->where(['category_id'=> $id]);
+            // Для заголовка списка статей определенной категории
+            $categoryOne = Category::findOne($id);
+
+        } else {
+
+            $query = Article::find();
+            $categoryOne = null;
+        }
+
+        //общее количество статей
         $count = $query->count();
 
-        // create a pagination object with the total count
-        $pagination = new Pagination(['totalCount' => $count, 'pageSize' => 7]);
+        $pagination = new Pagination([
+                        'totalCount' => $count, 
+                        'pageSize' => PAGE_SIZE
+                    ]);
 
-        // limit the query using the pagination and retrieve the articles
         $articles = $query->offset($pagination->offset)
-            ->limit($pagination->limit)
-            ->all();
+                    ->limit($pagination->limit)
+                    ->all();
 
-        $result = Article::getSideBar() + compact('articles', 'pagination');
+        // объединяем в один массив
+        $result = Article::getSideBar() + compact(
+                        'articles', 
+                        'pagination',
+                        'categoryOne' 
+                    );
 
         return $this->render('index', $result);
     }
@@ -91,71 +107,16 @@ class SiteController extends Controller
     public function actionView($id)
     {
         $article = Article::findOne($id);
-        $result = Article::getSideBar() + compact('article');
+
+        // comments/getComment() - массив объектов Comment
+        $comments = $article->getComment()->where(['status' => 1])->all();
+
+        $commentForm = new CommentForm;
+
+        $result = Article::getSideBar() + compact('article', 'comments', 'commentForm');
+
 
         return $this->render('single', $result);
-    }
-
-    /**
-     * @return Response|string
-     */
-    public function actionCategory($id)
-    {
-        // build a DB query to get all articles with status = 1
-        $query = Article::find()->where(['category_id'=> $id]);
-
-        // get the total number of articles (but do not fetch the article data yet)
-        $count = $query->count();
-
-        // create a pagination object with the total count
-        $pagination = new Pagination(['totalCount' => $count, 'pageSize' => 7]);
-
-        // limit the query using the pagination and retrieve the articles
-        $articles = $query->offset($pagination->offset)
-            ->limit($pagination->limit)
-            ->all();
-
-        $categoryOne = Category::findOne($id);
-
-        $result = Article::getSideBar() + compact(
-                'articles', 
-                'pagination',
-                'categoryOne' 
-            );
-
-        return $this->render('index', $result);
-    }
-
-    /**
-     * Login action.
-     *
-     * @return Response|string
-     */
-    public function actionLogin()
-    {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        }
-        return $this->render('login', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Logout action.
-     *
-     * @return Response
-     */
-    public function actionLogout()
-    {
-        Yii::$app->user->logout();
-
-        return $this->goHome();
     }
 
     /**
@@ -175,6 +136,26 @@ class SiteController extends Controller
         return $this->render('contact', [
             'model' => $model,
         ]);
+    }
+
+    /**
+     * Сохраняет комментарий в БД
+     *
+     * @return Response|string
+     */
+    public function actionComment($id)
+    {
+        $model = new CommentForm();
+
+        if(Yii::$app->request->isPost) {
+
+            $model->load(Yii::$app->request->post());
+
+            if($model->saveComment($id)) {
+                
+                return $this->redirect(['site/view', 'id' => $id]);
+            }
+        }
     }
 
     /**

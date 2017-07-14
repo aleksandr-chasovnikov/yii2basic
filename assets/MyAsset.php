@@ -22,11 +22,12 @@ class MyAsset extends AssetBundle
         '//fonts.googleapis.com/css?family=Great+Vibes',
         '//fonts.googleapis.com/css?family=Open+Sans:700,700italic,800,300,300italic,400italic,400,600,600italic',
         '//fonts.googleapis.com/css?family=Playfair+Display:400,700,400italic',
-        'GoEasyOn/css/style.css?t=0kxs',
+        'GoEasyOn/css/style.css?t=0kdd',
         'GoEasyOn/css/component.css',
         'GoEasyOn/css/font-awesome.css',
         'GoEasyOn/css/magnific-popup.css',
         'GoEasyOn/css/animate.css',
+        // 'css/site.css'
     ];
     public $js = [
         "GoEasyOn/js/modernizr.custom.js",
@@ -35,7 +36,7 @@ class MyAsset extends AssetBundle
         "GoEasyOn/js/wow.min.js",
         "GoEasyOn/js/rAF.js",
         "GoEasyOn/js/demo-2.js",
-        "GoEasyOn/js/move-top.js",
+        "GoEasyOn/js/move-top.js?е=0ga",
         "GoEasyOn/js/easing.js",
         "GoEasyOn/js/responsiveslides.min.js",
     ];

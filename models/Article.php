@@ -92,8 +92,12 @@ class Article extends \yii\db\ActiveRecord
         return $this->save(false); //отключили валидацию
     }
 
-    public function getImage()
+    public function getImage($image = null)
     {
+        if ($image) {
+
+            return $image ? '/uploads/' . $image : '/no-image.png';
+        }
         return $this->image ? '/uploads/' . $this->image : '/no-image.png';
     }
 
@@ -115,11 +119,19 @@ class Article extends \yii\db\ActiveRecord
     }
 
     /**
-     * Связывание с таблицей 'category'
+     * Связывание с таблицей 'category'('id' в Category)
      */
     public function getCategory()
     {
         return $this->hasOne(Category::className(), ['id' => 'category_id']);
+    }
+
+    /**
+     * Связывание с таблицей 'category'('article_id' - в модели Comment)
+     */
+    public function getComment()
+    {
+        return $this->hasMany(Comment::className(), ['article_id' => 'id']);
     }
 
     /**
@@ -180,10 +192,14 @@ class Article extends \yii\db\ActiveRecord
     }
 
     /**
-     * Получить дату
+     * Получить форматированную дату
      */
-    public function getDate()
+    public function getDate($date = null)
     {
+        if ($date) {
+            $this->date = $date;
+        }
+
         Yii::$app->formatter->locale = 'ru-RU';
 
         if ( Yii::$app->formatter->asDate($this->date) ) {
@@ -198,6 +214,17 @@ class Article extends \yii\db\ActiveRecord
     {
         $popular = Article::find()->orderBy('viewed desc')->limit(3)->all();
         $recent = Article::find()->orderBy('date desc')->limit(4)->all();
+
+        // попытка оптимизации: один подготовленный запрос для разных параметров
+        // $command = Yii::$app->db->createCommand('SELECT * FROM article ORDER BY :order DESC LIMIT 3')
+        //         ->bindParam(':order', $order);
+
+        // $order = 'viewed';
+        // $popular = $command->queryAll();
+
+        // $order = 'date';
+        // $recent = $command->queryAll();
+
         $categories = Category::find()->all();
 
         return compact('popular', 'recent', 'categories');

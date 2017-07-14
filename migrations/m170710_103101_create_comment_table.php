@@ -18,6 +18,7 @@ class m170710_103101_create_comment_table extends Migration
             'user_id' => $this->integer(),
             'article_id' => $this->integer(),
             'status' => $this->integer(),
+            'date' => $this->date(),
         ]);
 
         // создает индекс для user_id
