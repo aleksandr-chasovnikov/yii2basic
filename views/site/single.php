@@ -15,7 +15,7 @@ use app\models\Article;
 					<div class="left-blog left-single">
 						<div class="blog-left">
 							<div class="single-left-left wow fadeInRight animated animated" data-wow-delay=".5s">
-								<p>Статья от <a href="#">Admin</a> &nbsp;&nbsp; <?= $article->getDate() ?> &nbsp;&nbsp; <a href="#">Comments (10)</a></p>
+								<p>Статья от <a href="#"><?= $article->user->name ?></a> &nbsp;&nbsp; <?= $article->getDate() ?> &nbsp;&nbsp; <a href="#comments">(Комментариев: <?= $article->getComment()->count() ?>)</a></p>
 								<img src="<?= $article->getImage(); ?>" alt="image" />
 							</div>
 
@@ -30,42 +30,35 @@ use app\models\Article;
 
 						</div>
 						<div class="response">
-							<h3 class="wow fadeInRight animated animated" data-wow-delay=".5s">Комментарии</h3>
+							<h3 class="wow fadeInRight animated animated" data-wow-delay=".5s"><a name="comments">Комментарии</a></h3>
 
 					<?php if(!empty($comments)): ?>
 						<?php foreach($comments as $comment): ?>
 
 							<div class="media response-info">
 								<div class="media-left response-text-left wow fadeInRight animated animated" data-wow-delay=".5s">
-									<a href="#">
-										<img width="50" class="media-object" src="<?= $comment->user->image; ?>" alt="">
-									</a>
-									<h5><a href="#">
-
-									<?php if (\Yii::$app->user->isGuest): ?>
-
-										<?= $comment->user->name; ?>
-
-									<?php else: ?>
-
-										<?= \Yii::$app->user->identity->name; ?>
-
-									<?php endif; ?>											
-										</a>
-									</h5>
+									<img width="50" class="media-object" src="<?= $comment->user->image; ?>" alt="">
+									<h5><?= $comment->user->name; ?></h5>
 								</div>
 
 								<div class="media-body response-text-right">
 									<p class="wow fadeInRight animated animated" data-wow-delay=".5s"><?= $comment->text; ?></p>
 									<ul class="wow fadeInRight animated animated" data-wow-delay=".5s">
 										<li><?= $comment->getDate(); ?></li>
-										<li><a href="single.html">Ответить</a></li>
+										<li><a href="#com">Ответить</a></li>
+
+			<?php if( (($comment->user->name) 
+						== (\Yii::$app->user->identity->name)) 
+							|| Yii::$app->user->identity->isAdmin ): ?>
+
+										<li><a href="#com" class="btn btn-danger">Удалить</a></li>
+			<?php endif ?>
 									</ul>
 
 
 							<!-- end foreach -->
 
-									<div class="media response-info">
+						<!-- 			<div class="media response-info">
 										<div class="media-left response-text-left wow fadeInRight animated animated" data-wow-delay=".5s">
 											<a href="#">
 												<img class="media-object" src="GoEasyOn/images/t2.jpg" alt="">
@@ -81,7 +74,7 @@ use app\models\Article;
 											</ul>		
 										</div>
 										<div class="clearfix"> </div>
-									</div>
+									</div> -->
 
 							<!-- end foreach -->
 
@@ -95,7 +88,8 @@ use app\models\Article;
 
 						</div>
 						<div class="opinion">
-							<h3 class="wow fadeInRight animated animated" data-wow-delay=".5s">Оставьте свой комментарий</h3>
+							<h3 class="wow fadeInRight animated animated" data-wow-delay=".5s"><a name="com">Оставьте свой комментарий</a></h3>
+							
 <?php $form = \yii\widgets\ActiveForm::begin([
 	'action' =>['site/comment', 'id' => $article->id],
 	'options' =>['class' => 'wow fadeInRight animated animated', 'role' => 'form']]); ?>
@@ -139,7 +133,7 @@ use app\models\Article;
 
           </ul>
         </div>
-        <div class="categories">
+<!--         <div class="categories">
           <h3 class="wow fadeInLeft animated animated" data-wow-delay=".5s">Архив</h3>
           <ul class="marked-list offs1">
             <li class="wow fadeInLeft animated animated" data-wow-delay=".5s"><a href="#">May 2016 (7)</a></li>
@@ -153,7 +147,7 @@ use app\models\Article;
             <li class="wow fadeInLeft animated animated" data-wow-delay=".5s"><a href="#">September 2014 (8)</a></li>
             <li class="wow fadeInLeft animated animated" data-wow-delay=".5s"><a href="#">August 2014 (6)</a></li>                          
           </ul>
-        </div>
+        </div> -->
         <div class="comments">
           <h3 class="wow fadeInLeft animated animated" data-wow-delay=".5s">Популярные статьи</h3>
 

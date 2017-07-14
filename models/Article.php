@@ -127,6 +127,14 @@ class Article extends \yii\db\ActiveRecord
     }
 
     /**
+     * Связывание с таблицей 'user'('id' в User)
+     */
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    /**
      * Связывание с таблицей 'category'('article_id' - в модели Comment)
      */
     public function getComment()
