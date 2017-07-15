@@ -8,10 +8,6 @@ use yii\widgets\ActiveForm;
 /* @var $model app\models\Article */
 /* @var $form yii\widgets\ActiveForm */
 
-
-//Тестовые данные
-$faker = Faker\Factory::create('en_US');
-
 ?>
 
 <div class="article-form">
@@ -19,32 +15,32 @@ $faker = Faker\Factory::create('en_US');
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'title')
-        ->textInput(['maxlength' => true, 'value' => $faker->realText(50)]) ?>
+        ->textInput(['maxlength' => true, 'value' => $model->title]) ?>
 
     <?= $form->field($model, 'description')
-        ->textarea(['rows' => 4, 'value' => $faker->realText(400)]) ?>
+        ->textarea(['rows' => 4, 'value' => $model->description]) ?>
 
     <?= $form->field($model, 'content')
-        ->textarea(['rows' => 8, 'value' => $faker->realText(2000)]) ?>
+        ->textarea(['rows' => 8, 'value' => $model->content]) ?>
 
     <?= $form->field($model, 'viewed')
-        ->textInput(['value' => 0]) ?>
+        ->textInput([$model->viewed]) ?>
 
-    <?= $form->field($model, 'user_id')->textInput(['disabled' => 'disabled', 'value' => \Yii::$app->user->identity->id]) ?>
+    <?= $form->field($model, 'user_id')->textInput(['disabled' => 'disabled', 'value' => $model->user_id]) ?>
 
     <?= $form->field($model, 'status')
-        ->label('Виден всем? Да: 1, Нет: 0')
-        ->textInput(['value' => 1]) ?>
+        ->label('Видна всем? Да: 1, Нет: 0')
+        ->textInput(['value' => $model->status]) ?>
 
     <?= $form->field($model, 'category_id')
         ->label('Категория')
-        ->dropDownList( ArrayHelper::getColumn( $categories, 'title'), $options = ['value' => 2] ) ?>
+        ->dropDownList($categories, $options = [] ) ?>
 
 <?php if ( empty($model->date) ) : ?>
 
     <?= $form->field($model, 'date')
     ->label('Дата создания')
-    ->textInput(['value' => date('Y-m-d')]) ?>
+    ->textInput(['value' => $model->date]) ?>
 
 <?php endif ?>
     <div class="form-group">

@@ -15,6 +15,10 @@ $this->params['breadcrumbs'][] = 'Изменить';
 
 <div class="article-update">
 
+    <h1><?= Html::encode($this->title) ?></h1>
+
+    <?= $this->render('_form_update', compact('model', 'categories')) ?>
+
 <?php else: 
 
 $this->title = 'Создать статью';
@@ -24,10 +28,12 @@ $this->params['breadcrumbs'][] = $this->title
 
 <div class="article-create">
 
-<?php endif ?>
-
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?= $this->render('_form', compact('model', 'categories')) ?>
+    <?= $this->render('_form_create', compact('model', 'categories')) ?>
+
+<?php endif ?>
+
+
 
 </div>

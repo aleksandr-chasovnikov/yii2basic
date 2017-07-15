@@ -38,7 +38,7 @@ use yii\helpers\Url;
           <div class="blog-left">
 
             <div class="blog-left-left wow fadeInRight animated animated" data-wow-delay=".5s">
-              <p>Статья от <a name="iakor" href="#">Admin</a> &nbsp;&nbsp; <?= $article->getDate() ?> &nbsp;&nbsp; <a href="#">Comments (10)</a></p>
+              <p>Статья от <a name="iakor" href="#"><?= $article->user->name ?></a> &nbsp;&nbsp; <?= $article->getDate() ?> &nbsp;&nbsp; <a href="#">(Комментариев: <?= $article->getComment()->count() ?>)</a></p>
               <a href="<?= Url::toRoute(['site/view', 'id' => $article->id]) ?>"><img src="<?= $article->getImage(); ?>" alt="image" /></a>
             </div>
 
@@ -80,21 +80,6 @@ use yii\helpers\Url;
 
             <?php endforeach; ?>
 
-          </ul>
-        </div>
-        <div class="categories">
-          <h3 class="wow fadeInLeft animated animated" data-wow-delay=".5s">Архив</h3>
-          <ul class="marked-list offs1">
-            <li class="wow fadeInLeft animated animated" data-wow-delay=".5s"><a href="#">May 2016 (7)</a></li>
-            <li class="wow fadeInLeft animated animated" data-wow-delay=".5s"><a href="#">April 2016 (11)</a></li>
-            <li class="wow fadeInLeft animated animated" data-wow-delay=".5s"><a href="#">March 2016 (12)</a></li>
-            <li class="wow fadeInLeft animated animated" data-wow-delay=".5s"><a href="#">February 2016 (14)</a> </li>
-            <li class="wow fadeInLeft animated animated" data-wow-delay=".5s"><a href="#">January 2016 (10)</a></li>    
-            <li class="wow fadeInLeft animated animated" data-wow-delay=".5s"><a href="#">December 2014 (12)</a></li>
-            <li class="wow fadeInLeft animated animated" data-wow-delay=".5s"><a href="#">November 2014 (8)</a></li>
-            <li class="wow fadeInLeft animated animated" data-wow-delay=".5s"><a href="#">October 2014 (7)</a> </li>
-            <li class="wow fadeInLeft animated animated" data-wow-delay=".5s"><a href="#">September 2014 (8)</a></li>
-            <li class="wow fadeInLeft animated animated" data-wow-delay=".5s"><a href="#">August 2014 (6)</a></li>                          
           </ul>
         </div>
         <div class="comments">

@@ -71,7 +71,7 @@ class ArticleController extends \app\controllers\BaseController
         $article = $this->findModel($id);
 
         // getCategory() == category (особенность Yii2)
-        $selectedCategory = $article->category->id;
+        $selectedCategory = $article->category_id;
 
         // ArrayHelper предоставляет дополнительные функции массива
         // Берет из выборки только 'id', 'title'
@@ -121,17 +121,51 @@ class ArticleController extends \app\controllers\BaseController
     }
 
     /**
-     * 
+     * Создание записи
      */
     public function actionCreate()
     {
         // $categories = Category::find()->select('title')->all();
 
-        $categories = (new \yii\db\Query())
-            ->select(['id', 'title'])
-            ->from('category')
-            ->all();
+        // $categories = (new \yii\db\Query())
+        //     ->select(['id', 'title'])
+        //     ->from('category')
+        //     ->all();
+
+        $categoriesObj = Category::find()->orderBy('title')->all();
+
+        foreach ($categoriesObj as $value) {
+            $categories[$value->id] = $value->title;
+        }
 
         parent::actionUpdate($categories, $id = null);
+    }
+
+    /**
+     * Редактирование записи
+     */
+    public function actionUpdate($category = null, $id = null)
+    {
+        $model = $this->findModel($id);
+
+        $category = (new \yii\db\Query())
+            ->select(['title'])
+            ->from('category')
+            ->where(['id' => $model->category_id])
+            ->all();
+
+        $categoriesObj = Category::find()->orderBy('title')->all();
+
+        foreach ($categoriesObj as $value) {
+            $categories[$value->id] = $value->title;
+        }
+
+        if ( $model->load(Yii::$app->request->post()) && $model->save()) {
+
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+
+        return $this->render('update', compact('model', 'categories', 'category'));     
+
     }
 }

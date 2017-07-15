@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use app\models\Category;
+use app\models\Comment;
 use app\models\Tag;
 use yii\helpers\ArrayHelper;
 
@@ -114,6 +115,8 @@ class Article extends \yii\db\ActiveRecord
     {
         $imageModel = new ImageUpload;
         $imageModel->deleteCurrentImage($this->image);
+
+        Comment::deleteAll(['id' => $this->category_id]);
 
         return parent::beforeDelete();
     }
