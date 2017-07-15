@@ -3,25 +3,26 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "article_tag".
+ * Модель для связи тэг-пост
  *
- * @property integer $id
- * @property integer $article_id
- * @property integer $tag_id
+ * @property integer $tag_id идентификатор тэга
+ * @property integer $article_id идентификатор поста, к которому принадлежит тэг
  *
- * @property Article $article
- * @property Tag $tag
+ * @property Article $article пост
+ * @property Tag $tag тэг
  */
-class ArticleTag extends \yii\db\ActiveRecord
+class ArticleTag extends ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'article_tag';
+        return '{{%article_tag}}';
     }
 
     /**
@@ -30,9 +31,7 @@ class ArticleTag extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['article_id', 'tag_id'], 'integer'],
-            [['article_id'], 'exist', 'skipOnError' => true, 'targetClass' => Article::className(), 'targetAttribute' => ['article_id' => 'id']],
-            [['tag_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tag::className(), 'targetAttribute' => ['tag_id' => 'id']],
+            [['tag_id', 'article_id'], 'integer']
         ];
     }
 
@@ -42,22 +41,22 @@ class ArticleTag extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'article_id' => 'Article ID',
-            'tag_id' => 'Tag ID',
+            'id' => Yii::t('backend', 'ID'),
+            'tag_id' => Yii::t('backend', 'Tag ID'),
+            'article_id' => Yii::t('backend', 'Post ID'),
         ];
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getArticle()
     {
-        return $this->hasOne(Article::className(), ['id' => 'article_id']);
+        return $this->hasOne(Post::className(), ['id' => 'article_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getTag()
     {

@@ -124,6 +124,16 @@ use yii\helpers\Url;
           <?php endforeach; ?>
 
         </div>
+        <div class="comments">
+          <h3 class="wow fadeInLeft animated animated" data-wow-delay=".5s">Облако тегов</h3>
+
+          <div class="tags">
+              <?php foreach($tags as $tag) : ?>
+                  <a href="#"><?= $tag['title'] ?></a>
+              <?php endforeach; ?>
+          </div>
+
+        </div>
       </div>
       
       <div class="clearfix"> </div>

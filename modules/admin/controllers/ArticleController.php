@@ -138,7 +138,16 @@ class ArticleController extends \app\controllers\BaseController
             $categories[$value->id] = $value->title;
         }
 
-        parent::actionUpdate($categories, $id = null);
+        $model = new $this->model;
+        
+        $tags = new Tag;
+
+        if ( $model->load(Yii::$app->request->post()) && $model->save()) {
+
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+
+        return $this->render('update', compact('model', 'categories', 'tags')); 
     }
 
     /**
@@ -155,6 +164,7 @@ class ArticleController extends \app\controllers\BaseController
             ->all();
 
         $categoriesObj = Category::find()->orderBy('title')->all();
+        $tags = Tag::find()->orderBy('date DESC')->all();
 
         foreach ($categoriesObj as $value) {
             $categories[$value->id] = $value->title;
@@ -165,7 +175,7 @@ class ArticleController extends \app\controllers\BaseController
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render('update', compact('model', 'categories', 'category'));     
+        return $this->render('update', compact('model', 'categories', 'category', 'tags'));     
 
     }
 }

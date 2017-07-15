@@ -31,6 +31,13 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'status')
         ->label('Видна всем? Да: 1, Нет: 0')
         ->textInput(['value' => $model->status]) ?>
+                
+    <?= $form->field($model, 'tags')->listBox(
+            ArrayHelper::map($tags, 'id', 'title'),
+            [
+                'multiple' => true
+            ]
+        ) ?>
 
     <?= $form->field($model, 'category_id')
         ->label('Категория')

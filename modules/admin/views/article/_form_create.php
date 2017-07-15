@@ -35,6 +35,13 @@ $faker = Faker\Factory::create('en_US');
     <?= $form->field($model, 'status')
         ->label('Видна всем? Да: 1, Нет: 0')
         ->textInput(['value' => 1]) ?>
+        
+    <?= $form->field($model, 'tags')->listBox(
+            ArrayHelper::map($tags, 'id', 'title'),
+            [
+                'multiple' => true
+            ]
+        ) ?>
 
     <?= $form->field($model, 'category_id')
         ->label('Категория')

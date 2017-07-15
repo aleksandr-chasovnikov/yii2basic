@@ -11,6 +11,7 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\CommentForm;
 use app\models\Article;
+use app\models\Tag;
 use app\models\Category;
 use yii\data\Pagination;
 
@@ -75,6 +76,9 @@ class SiteController extends Controller
 
             $query = Article::find();
             $categoryOne = null;
+            $tags = Tag::find()
+                ->asArray()
+                ->all();;
         }
 
         //общее количество статей
@@ -93,7 +97,8 @@ class SiteController extends Controller
         $result = Article::getSideBar() + compact(
                         'articles', 
                         'pagination',
-                        'categoryOne' 
+                        'categoryOne',
+                        'tags'
                     );
 
         return $this->render('index', $result);

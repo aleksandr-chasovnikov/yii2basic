@@ -45,10 +45,60 @@ class Article extends \yii\db\ActiveRecord
             [['title', 'description', 'content'], 'required'],
             [['date'], 'date', 'format' => 'php:Y-m-d'],
             [['date'], 'default', 'value' => date('Y-m-d')],
-            [['date'], 'safe'], // не проверять - безопасные данные
+            [['date', 'tags'], 'safe'], // не проверять - безопасные данные
             [['viewed', 'user_id', 'status', 'category_id'], 'integer'],
             [['title', 'image'], 'string', 'max' => 255],
         ];
+    }
+
+    /**
+     * Список тэгов, закреплённых за постом.
+     * @var array
+     */
+    protected $tags = [];
+     
+    /**
+     * Устанавлиает тэги поста.
+     * @param $tagsId
+     */
+    public function setTags($tagsId)
+    {
+        $this->tags = (array) $tagsId;
+    }
+     
+    /**
+     * Возвращает массив идентификаторов тэгов.
+     */
+    public function getTags()
+    {
+        return ArrayHelper::getColumn(
+            $this->getArticleTags()->all(), 'tag_id'
+        );
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    // public function getTags()
+    // {
+    //     return $this->hasMany(Tag::className(), ['id' => 'tag_id'])
+    //         ->viaTable('article_tag', ['article_id' => 'id']);
+    // }
+
+    /**
+     * @inheritdoc
+     */
+    public function afterSave($insert, $changedAttributes)
+    {
+        ArticleTag::deleteAll(['post_id' => $this->id]);
+        $values = [];
+        foreach ($this->tags as $id) {
+            $values[] = [$this->id, $id];
+        }
+        self::getDb()->createCommand()
+            ->batchInsert(ArticleTag::tableName(), ['post_id', 'tag_id'], $values)->execute();
+     
+        parent::afterSave($insert, $changedAttributes);
     }
 
     /**
@@ -160,15 +210,6 @@ class Article extends \yii\db\ActiveRecord
             
             return true;
         }
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getTags()
-    {
-        return $this->hasMany(Tag::className(), ['id' => 'tag_id'])
-            ->viaTable('article_tag', ['article_id' => 'id']);
     }
 
     /**
