@@ -51,7 +51,7 @@ use app\models\Article;
 						== (\Yii::$app->user->identity->name)) 
 							|| Yii::$app->user->identity->isAdmin ): ?>
 
-										<li><a href="#com" class="btn btn-danger">Удалить</a></li>
+										<li><a href="<?= Url::toRoute(['site/view', 'id' => $article->id]) ?>" class="btn btn-danger">Удалить</a></li>
 			<?php endif ?>
 									</ul>
 

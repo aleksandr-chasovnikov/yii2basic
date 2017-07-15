@@ -51,7 +51,9 @@ AppAsset::register($this);
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
+
         <?= $content ?>
+        
     </div>
 </div>
 
@@ -66,4 +68,5 @@ AppAsset::register($this);
 <?php $this->endBody() ?>
 </body>
 </html>
-<?php $this->endPage() ?>
+<?php $this->endPage();die; ?>
+

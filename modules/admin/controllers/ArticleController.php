@@ -103,4 +103,19 @@ class ArticleController extends \app\controllers\BaseController
 
         return $this->render('tags', compact('selectedTags', 'tags'));
     }
+
+    /**
+     * 
+     */
+    public function actionCreate()
+    {
+        // $categories = Category::find()->select('title')->all();
+
+        $categories = (new \yii\db\Query())
+            ->select(['id', 'title'])
+            ->from('category')
+            ->all();
+
+        parent::actionUpdate($categories, $id = null);
+    }
 }

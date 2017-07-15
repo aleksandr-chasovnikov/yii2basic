@@ -2,11 +2,10 @@
 
 use yii\helpers\Html;
 
-
 /* @var $this yii\web\View */
 /* @var $model app\models\Article */
 
-if ( !empty($model)):
+if ( empty($categories)):
 
 $this->title = 'Изменить статью: ' . $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Статьи', 'url' => ['index']];
@@ -29,6 +28,6 @@ $this->params['breadcrumbs'][] = $this->title
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?= $this->render('_form', compact('model')) ?>
+    <?= $this->render('_form', compact('model', 'categories')) ?>
 
 </div>

@@ -86,7 +86,7 @@ abstract class BaseController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate( $id = null)
+    public function actionUpdate( $categories = null, $id = null)
     {
         // Если $_POST пуст и не пусто $id, то получаем выборку из БД
     	if ($id) {
@@ -104,7 +104,7 @@ abstract class BaseController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-            return $this->render('update', compact('model'));        
+        return $this->render('update', compact('model', 'categories'));        
     }
 
     /**

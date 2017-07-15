@@ -42,8 +42,8 @@ class Article extends \yii\db\ActiveRecord
         return [
             [['title', 'description', 'content'], 'string'],
             [['title', 'description', 'content'], 'required'],
-            [['date'], 'date', 'format' => 'php:Y-m-d'],
-            [['date'], 'default', 'value' => date('Y-m-d')],
+            [['date'], 'date', 'format' => 'php:d-m-Y'],
+            [['date'], 'default', 'value' => date('d-m-Y')],
             // [['date'], 'safe'], // не проверять - безопасные данные
             [['viewed', 'user_id', 'status', 'category_id'], 'integer'],
             [['title', 'image'], 'string', 'max' => 255],
