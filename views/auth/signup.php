@@ -9,6 +9,10 @@ use yii\bootstrap\ActiveForm;
 
 $this->title = 'Регистрация';
 $this->params['breadcrumbs'][] = $this->title;
+
+//Тестовые данные
+$faker = Faker\Factory::create('en_US');
+
 ?>
 <div class="site-signup">
     <div class="container">
@@ -20,16 +24,22 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
 
                 <?= $form->field($model, 'name')
-                    ->label('')
-                    ->textInput(['autofocus' => true, 'placeholder' => 'Ваше имя']) ?>
+                    ->textInput([
+                        'autofocus' => true, 
+                        'placeholder' => 'Ваше имя',
+                        'value' => $faker->name
+                    ]) ?>
 
                 <?= $form->field($model, 'email')
-                    ->label('')
-                    ->textInput(['autofocus' => true, 'placeholder' => 'Ваш email']) ?>
+                    ->textInput([
+                        'autofocus' => true, 
+                        'placeholder' => 'Ваш email',
+                        'value' => $faker->email
+                    ]) ?>
 
                 <?= $form->field($model, 'password')
-                    ->label('')
-                    ->passwordInput(['placeholder' => 'Ваш пароль']) ?>
+                    // ->passwordInput(['placeholder' => 'Ваш пароль'])
+                    ->textInput(['placeholder' => 'Ваш пароль', 'value' => $faker->password]) ?>
 
                 <div class="form-group">
                     <?= Html::submitButton('Отправить', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>

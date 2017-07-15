@@ -23,6 +23,22 @@ class ArticleController extends \app\controllers\BaseController
     }
 
     /**
+     * 
+     */
+    public function actionIndex($categories = null)
+    {
+        // $categories = Category::find()->select('title')->all();
+
+        $categoriesObj = Category::find()->orderBy('title')->all();
+
+        foreach ($categoriesObj as $value) {
+            $categories[$value->id] = $value->title;
+        }
+
+        return parent::actionIndex($categories);        
+    }
+
+    /**
      * Загружает картинки
      */
     public function actionSetImage($id)

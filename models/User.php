@@ -43,12 +43,12 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'name' => 'Name',
-            'email' => 'Email',
-            'password' => 'Password',
-            'isAdmin' => 'Is Admin',
-            'photo' => 'Photo',
+            'id' => 'ID пользователя',
+            'name' => 'Ваше имя',
+            'email' => 'Выш email',
+            'password' => 'Пароль',
+            'isAdmin' => 'Админ? Да: 1, Нет: 0',
+            'photo' => 'Фото',
         ];
     }
 
@@ -105,7 +105,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
 
     public function getAuthKey()
     {
-        return $this->authKey;
+        // return $this->authKey;
     }
 
     public function validateAuthKey($authKey)

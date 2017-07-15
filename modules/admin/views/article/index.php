@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\ArticleSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Articles';
+$this->title = 'Статьи';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="article-index">
@@ -27,20 +27,23 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'title',
             'description:ntext',
-            'content:ntext',
-            'category_id',
+            [
+                'attribute' =>'category',
+                'value' => 'category.title', //getCategory()->title
+                'filter' => $categories,
+            ],
             'date',
             [
                 'format' => 'html',
-                'label' => 'Картинка',
+                'label' => 'Изображение',
                 'value' => function($data) {
                     return Html::img($data->getImage(), ['width' => 200]);
                 }
             ],
+            'status',
             // 'image',
             // 'viewed',
             // 'user_id',
-            // 'status',
             // 'category_id',
 
             ['class' => 'yii\grid\ActionColumn'],

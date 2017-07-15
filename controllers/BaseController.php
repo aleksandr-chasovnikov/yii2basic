@@ -52,7 +52,7 @@ abstract class BaseController extends Controller
      * Список записей
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($categories = null)
     {
         $nameModel = $this->model . 'Search';
 
@@ -63,6 +63,7 @@ abstract class BaseController extends Controller
         return $this->render( 'index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'categories' => $categories,
         ]);
 
     }

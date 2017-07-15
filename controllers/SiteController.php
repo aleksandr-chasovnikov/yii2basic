@@ -16,7 +16,7 @@ use yii\data\Pagination;
 
 class SiteController extends Controller
 {
-    const PAGE_SIZE = 7;
+    // const PAGE_SIZE = 7;
 
     /**
      * @inheritdoc
@@ -82,7 +82,7 @@ class SiteController extends Controller
 
         $pagination = new Pagination([
                         'totalCount' => $count, 
-                        'pageSize' => PAGE_SIZE
+                        'pageSize' => 7
                     ]);
 
         $articles = $query->offset($pagination->offset)

@@ -42,9 +42,9 @@ class Article extends \yii\db\ActiveRecord
         return [
             [['title', 'description', 'content'], 'string'],
             [['title', 'description', 'content'], 'required'],
-            [['date'], 'date', 'format' => 'php:d-m-Y'],
-            [['date'], 'default', 'value' => date('d-m-Y')],
-            // [['date'], 'safe'], // не проверять - безопасные данные
+            [['date'], 'date', 'format' => 'php:Y-m-d'],
+            [['date'], 'default', 'value' => date('Y-m-d')],
+            [['date'], 'safe'], // не проверять - безопасные данные
             [['viewed', 'user_id', 'status', 'category_id'], 'integer'],
             [['title', 'image'], 'string', 'max' => 255],
         ];
@@ -56,16 +56,16 @@ class Article extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'title' => 'Title',
-            'description' => 'Description',
-            'content' => 'Content',
-            'date' => 'Date',
-            'image' => 'Image',
-            'viewed' => 'Viewed',
-            'user_id' => 'User ID',
-            'status' => 'Status',
-            'category_id' => 'Category ID',
+            'id' => 'ID статьи',
+            'title' => 'Заголовок',
+            'description' => 'Краткое описание',
+            'content' => 'Текст',
+            'date' => 'Дата',
+            'image' => 'Изображение',
+            'viewed' => 'Количество просмотров',
+            'user_id' => 'ID автора',
+            'status' => 'Статус',
+            'category_id' => 'ID категории',
         ];
     }
 
@@ -208,7 +208,7 @@ class Article extends \yii\db\ActiveRecord
             $this->date = $date;
         }
 
-        Yii::$app->formatter->locale = 'ru-RU';
+        Yii::$app->formatter->locale = 'ru_RU';
 
         if ( Yii::$app->formatter->asDate($this->date) ) {
 
