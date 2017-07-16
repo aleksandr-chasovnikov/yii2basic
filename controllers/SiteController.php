@@ -76,17 +76,18 @@ class SiteController extends Controller
 
             $query = Article::find();
             $categoryOne = null;
-            $tags = Tag::find()
-                ->asArray()
-                ->all();;
+            
         }
+            // $tags = Tag::find()
+            //     ->asArray()
+            //     ->all();;
 
         //общее количество статей
         $count = $query->count();
 
         $pagination = new Pagination([
                         'totalCount' => $count, 
-                        'pageSize' => 7
+                        'pageSize' => 6
                     ]);
 
         $articles = $query->offset($pagination->offset)
@@ -97,8 +98,8 @@ class SiteController extends Controller
         $result = Article::getSideBar() + compact(
                         'articles', 
                         'pagination',
-                        'categoryOne',
-                        'tags'
+                        'categoryOne'
+                        // 'tags'
                     );
 
         return $this->render('index', $result);
@@ -111,15 +112,15 @@ class SiteController extends Controller
      */
     public function actionView($id)
     {
-        $article = Article::findOne($id);
+        $model = Article::findOne($id);
+        $model->viewedCounter();
 
         // comments/getComment() - массив объектов Comment
-        $comments = $article->getComment()->where(['status' => 1])->all();
+        // $comments = $article->getComment()->where(['status' => 1])->all();
 
         $commentForm = new CommentForm;
 
-        $result = Article::getSideBar() + compact('article', 'comments', 'commentForm');
-
+        $result = Article::getSideBar() + compact('model', 'comments', 'commentForm');
 
         return $this->render('single', $result);
     }
@@ -152,13 +153,17 @@ class SiteController extends Controller
     {
         $model = new CommentForm();
 
-        if(Yii::$app->request->isPost) {
+        if( Yii::$app->request->isPost ) {
 
-            $model->load(Yii::$app->request->post());
+            $model->load( Yii::$app->request->post() );
 
-            if($model->saveComment($id)) {
+            if( $model->saveComment($id) ) {
+
+                Yii::$app->getSession()->setFlash('comment', 'Сообщение отправлено.');
                 
-                return $this->redirect(['site/view', 'id' => $id]);
+                // return $this->refresh();
+                return $this->goBack( Yii::$app->request->referrer );
+                // return $this->redirect(['site/view', 'id' => $id]);
             }
         }
     }

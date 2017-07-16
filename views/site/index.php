@@ -30,6 +30,23 @@ use yii\helpers\Url;
 
 
    <div class="blog-top-grids">
+    <div class="col-md-4 blog-top-right-grid">
+      <div class="categories">
+        <h3 class="wow fadeInLeft animated animated" data-wow-delay=".5s">Категории</h3>
+        <ul>
+
+          <?php foreach($categories as $category): ?>
+
+            <li class="wow fadeInLeft animated animated" data-wow-delay=".5s">
+              <a href="<?= Url::toRoute(['/', 'id' => $category->id]) ?>"><?= $category->title ?></a>
+              <span class="post-count pull-right">(<?= $category->getArticles()->count() ?>)</span>
+            </li>
+
+          <?php endforeach; ?>
+
+        </ul>
+      </div>
+    </div>
     <div class="col-md-8 blog-top-left-grid">
       <div class="left-blog">
 
@@ -38,7 +55,7 @@ use yii\helpers\Url;
           <div class="blog-left">
 
             <div class="blog-left-left wow fadeInRight animated animated" data-wow-delay=".5s">
-              <p>Статья от <a name="iakor" href="#"><?= $article->user->name ?></a> &nbsp;&nbsp; <?= $article->getDate() ?> &nbsp;&nbsp; <a href="#">(Комментариев: <?= $article->getComment()->count() ?>)</a></p>
+              <p>Статья от <a name="iakor" href="#"><?= $article->user->name ?></a> &nbsp;&nbsp; <?= $article->getDate() ?> &nbsp;&nbsp; <a href="#">(Комментариев: <?//= $article->getComment()->count() ?>)</a></p>
               <a href="<?= Url::toRoute(['site/view', 'id' => $article->id]) ?>"><img src="<?= $article->getImage(); ?>" alt="image" /></a>
             </div>
 
@@ -64,24 +81,11 @@ use yii\helpers\Url;
         'pagination' => $pagination,
         ]); ?>
 
+        <hr>
+        <hr>
       </div>
 
       <div class="col-md-4 blog-top-right-grid">
-        <div class="categories">
-          <h3 class="wow fadeInLeft animated animated" data-wow-delay=".5s">Категории</h3>
-          <ul>
-
-            <?php foreach($categories as $category): ?>
-
-              <li class="wow fadeInLeft animated animated" data-wow-delay=".5s">
-              <a href="<?= Url::toRoute(['/', 'id' => $category->id]) ?>"><?= $category->title ?></a>
-                <span class="post-count pull-right">(<?= $category->getArticles()->count() ?>)</span>
-              </li>
-
-            <?php endforeach; ?>
-
-          </ul>
-        </div>
         <div class="comments">
           <h3 class="wow fadeInLeft animated animated" data-wow-delay=".5s">Популярные статьи</h3>
 
@@ -125,13 +129,13 @@ use yii\helpers\Url;
 
         </div>
         <div class="comments">
-          <h3 class="wow fadeInLeft animated animated" data-wow-delay=".5s">Облако тегов</h3>
+          <!-- <h3 class="wow fadeInLeft animated animated" data-wow-delay=".5s">Облако тегов</h3> -->
 
-          <div class="tags">
-              <?php foreach($tags as $tag) : ?>
-                  <a href="#"><?= $tag['title'] ?></a>
-              <?php endforeach; ?>
-          </div>
+       <!--    <div class="tags">
+            <?php //foreach($tags as $tag) : ?>
+              <a href="#"><?//= $tag['title'] ?></a>
+            <?php // endforeach; ?>
+          </div> -->
 
         </div>
       </div>

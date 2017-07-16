@@ -16,16 +16,20 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Tag', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Создать тег', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
             'title',
+            [
+                'attribute' =>'articleTag',
+                'value' => 'article.article_id', //getArticleTag()->article_id
+                'filter' => $article,
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

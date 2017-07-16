@@ -36,23 +36,11 @@ class ArticleTag extends ActiveRecord
     }
 
     /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => Yii::t('backend', 'ID'),
-            'tag_id' => Yii::t('backend', 'Tag ID'),
-            'article_id' => Yii::t('backend', 'Post ID'),
-        ];
-    }
-
-    /**
      * @return ActiveQuery
      */
     public function getArticle()
     {
-        return $this->hasOne(Post::className(), ['id' => 'article_id']);
+        return $this->hasOne(Article::className(), ['id' => 'article_id']);
     }
 
     /**

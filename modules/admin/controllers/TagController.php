@@ -2,7 +2,9 @@
 namespace app\modules\admin\controllers;
 
 use Yii;
-use common\models\Tag;
+use app\models\Tag;
+use app\models\Article;
+use app\models\ArticleTag;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -19,11 +21,18 @@ class TagController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
+                'denyCallback' => function($rule, $action) {
+
+                        throw new \yii\web\NotFoundHttpException();
+                    },
                 'rules' => [
                     [
                         'actions' => ['index', 'view', 'create', 'update', 'delete'],
-                        'allow' => true,
-                        'roles' => ['admin'],
+                        'allow' => true,                        
+                        'matchCallback' => function($rule, $action) {
+                            
+                                return \Yii::$app->user->identity->isAdmin;
+                            }
                     ],
                 ],
             ],
@@ -41,11 +50,19 @@ class TagController extends Controller
      */
     public function actionIndex()
     {
+        $posts = Article::find()->with('tags')->all();
+
+        foreach ($posts as $post) {
+            $article[] = $post->tagNames;
+        }
+
         $dataProvider = new ActiveDataProvider([
             'query' => Tag::find(),
         ]);
+
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'article' => $article,
         ]);
     }
     /**
@@ -67,13 +84,31 @@ class TagController extends Controller
     public function actionCreate()
     {
         $model = new Tag();
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
             return $this->redirect(['view', 'id' => $model->id]);
+
         } else {
+
             return $this->render('create', [
                 'model' => $model,
             ]);
         }
+
+        $article = Article::findOne($id);
+         
+         if ( Yii::$app->request->post() ) {
+
+            var_dump(Yii::$app->request->post());die;
+
+            $article->addTagNames('bar, baz');
+         }
+
+        // Добавление тегов строкой
+         
+        // Добавление тегов массивом
+        $article->addTagNames(['bar', 'baz']);
     }
     /**
      * Updates an existing Tag model.

@@ -40,19 +40,19 @@ class Tag extends ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
-        return [
-            'id' => Yii::t('admin', 'ID'),
-            'title' => Yii::t('admin', 'Title'),
-        ];
-    }
+    // public function attributeLabels()
+    // {
+    //     return [
+    //         'id' => Yii::t('admin', 'ID'),
+    //         'title' => Yii::t('admin', 'Title'),
+    //     ];
+    // }
 
     /**
      * Возвращает посты, относящиеся к тегу.
      * @return ActiveQuery
      */
-    public function getArticleTag()
+    public function getArticle()
     {
         return $this->hasMany(ArticleTag::className(), ['article_id' => 'id']);
     }

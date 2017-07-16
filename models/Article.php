@@ -7,6 +7,7 @@ use app\models\Category;
 use app\models\Comment;
 use app\models\Tag;
 use yii\helpers\ArrayHelper;
+use creocoder\taggable\TaggableBehavior;
 
 /**
  * This is the model class for table "article".
@@ -48,58 +49,52 @@ class Article extends \yii\db\ActiveRecord
             [['date', 'tags'], 'safe'], // не проверять - безопасные данные
             [['viewed', 'user_id', 'status', 'category_id'], 'integer'],
             [['title', 'image'], 'string', 'max' => 255],
+            ['tagNames', 'safe'],
         ];
     }
 
-    /**
-     * Список тэгов, закреплённых за постом.
-     * @var array
-     */
-    protected $tags = [];
-     
-    /**
-     * Устанавлиает тэги поста.
-     * @param $tagsId
-     */
-    public function setTags($tagsId)
+    public function behaviors()
     {
-        $this->tags = (array) $tagsId;
+        return [
+            TaggableBehavior::className(),
+        ];
     }
-     
-    /**
-     * Возвращает массив идентификаторов тэгов.
-     */
-    public function getTags()
+ 
+    public function transactions()
     {
-        return ArrayHelper::getColumn(
-            $this->getArticleTags()->all(), 'tag_id'
-        );
+        return [
+            self::SCENARIO_DEFAULT => self::OP_ALL,
+        ];
     }
-
+ 
+    public static function find()
+    {
+        return new ArticleQuery(get_called_class());
+    }
     /**
      * @return \yii\db\ActiveQuery
      */
-    // public function getTags()
-    // {
-    //     return $this->hasMany(Tag::className(), ['id' => 'tag_id'])
-    //         ->viaTable('article_tag', ['article_id' => 'id']);
-    // }
+    public function getTags()
+    {
+        return $this->hasMany(Tag::className(), ['id' => 'tag_id'])
+            ->viaTable('article_tag', ['article_id' => 'id']);
+    }
 
     /**
      * @inheritdoc
      */
-    public function afterSave($insert, $changedAttributes)
-    {
-        ArticleTag::deleteAll(['post_id' => $this->id]);
-        $values = [];
-        foreach ($this->tags as $id) {
-            $values[] = [$this->id, $id];
-        }
-        self::getDb()->createCommand()
-            ->batchInsert(ArticleTag::tableName(), ['post_id', 'tag_id'], $values)->execute();
+    // public function afterSave($insert, $changedAttributes)
+    // {
+    //     ArticleTag::deleteAll(['id' => $this->id]);
+    //     $values = [];
+    //     foreach ($this->tags as $id) {
+    //         $values[] = [$this->id, $id];
+    //     }
+    //     self::getDb()->createCommand()
+    //         ->batchInsert(ArticleTag::tableName(), ['id', 'tag_id'], $values)->execute();
      
-        parent::afterSave($insert, $changedAttributes);
-    }
+    //     parent::afterSave($insert, $changedAttributes);
+    // }
 
     /**
      * @inheritdoc
@@ -262,10 +257,13 @@ class Article extends \yii\db\ActiveRecord
         return false;
     }
 
+    /**
+     * Данные для сайдбара
+     */
     public static function getSideBar()
     {
         $popular = Article::find()->orderBy('viewed desc')->limit(3)->all();
-        $recent = Article::find()->orderBy('date desc')->limit(4)->all();
+        $recent = Article::find()->orderBy('date desc')->limit(3)->all();
 
         // попытка оптимизации: один подготовленный запрос для разных параметров
         // $command = Yii::$app->db->createCommand('SELECT * FROM article ORDER BY :order DESC LIMIT 3')
@@ -280,5 +278,15 @@ class Article extends \yii\db\ActiveRecord
         $categories = Category::find()->all();
 
         return compact('popular', 'recent', 'categories');
+    }
+
+    /**
+     * Счетчик просмотров
+     */
+    public function viewedCounter()
+    {
+        $this->viewed += 1;
+
+        return $this->save(false); //false - без валидации
     }
 }
