@@ -68,19 +68,21 @@ class SiteController extends Controller
     {
         if ($id) {
 
+            //показ статей по категории
             $query = Article::find()->where(['category_id'=> $id]);
             // Для заголовка списка статей определенной категории
             $categoryOne = Category::findOne($id);
 
         } else {
 
+            //показ статей без категории
             $query = Article::find();
             $categoryOne = null;
             
         }
-            // $tags = Tag::find()
-            //     ->asArray()
-            //     ->all();;
+            $tags = Tag::find()
+                ->asArray()
+                ->all();;
 
         //общее количество статей
         $count = $query->count();
@@ -98,8 +100,8 @@ class SiteController extends Controller
         $result = Article::getSideBar() + compact(
                         'articles', 
                         'pagination',
-                        'categoryOne'
-                        // 'tags'
+                        'categoryOne',
+                        'tags'
                     );
 
         return $this->render('index', $result);
@@ -112,15 +114,15 @@ class SiteController extends Controller
      */
     public function actionView($id)
     {
-        $model = Article::findOne($id);
-        $model->viewedCounter();
+        $article = Article::findOne($id);
+        $article->viewedCounter();
 
         // comments/getComment() - массив объектов Comment
-        // $comments = $article->getComment()->where(['status' => 1])->all();
+        $comments = $article->getComment()->where(['status' => 1])->all();
 
         $commentForm = new CommentForm;
 
-        $result = Article::getSideBar() + compact('model', 'comments', 'commentForm');
+        $result = Article::getSideBar() + compact('article', 'comments', 'commentForm');
 
         return $this->render('single', $result);
     }

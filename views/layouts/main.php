@@ -47,7 +47,7 @@ MyAsset::register($this);
                </a>
              </li>
              <li class="m_nav_item" id="moble_nav_item_2"> <a href="/site/about" class="link link--kumya scroll"><span data-letters="О проекте">О проекте</span></a></li>
-             <li class="m_nav_item" id="moble_nav_item_3"> <a href="/site/about" class="link link--kumya scroll"><span data-letters="Контакты">Контакты</span></a></li>
+             <li class="m_nav_item" id="moble_nav_item_3"> <a href="/site/contact" class="link link--kumya scroll"><span data-letters="Контакты">Контакты</span></a></li>
 
          <?php if (\Yii::$app->user->isGuest): ?>
 

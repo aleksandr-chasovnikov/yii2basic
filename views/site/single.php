@@ -13,19 +13,19 @@ $faker = Faker\Factory::create('en_US');
 <div class="blog">
 	<!-- container -->
 	<div class="container">
-		<h3 class="title"><?= $model->title ?></h3>
+		<h3 class="tittle"><?= $article->title ?></h3>
 		<div class="col-md-8 blog-top-left-grid">
 			<div class="left-blog left-single">
 				<div class="blog-left">
 					<div class="single-left-left wow fadeInRight animated animated" data-wow-delay=".5s">
-						<p>Статья от <a href="#"><?= $model->user->name ?></a> &nbsp;&nbsp; <?= $model->getDate() ?> &nbsp;&nbsp; <a href="#comments">(Комментариев: <?//= $model->getComment()->count() ?>)</a></p>
-						<img src="<?= $model->getImage(); ?>" alt="image" />
+						<p>Статья от <a href="#"><?= $article->user->name ?></a> &nbsp;&nbsp; <?= $article->getDate() ?> &nbsp;&nbsp; <a href="#comments">(Комментариев: <?= $article->getComment()->count() ?>)</a></p>
+						<img src="<?= $article->getImage(); ?>" alt="image" />
 					</div>
 
 					<!-- foreach -->
 
 					<div class="blog-left-bottom wow fadeInRight animated animated" data-wow-delay=".5s">
-						<p><?= $model->content ?>
+						<p><?= $article->content ?>
 						</p>
 					</div>
 
@@ -34,11 +34,9 @@ $faker = Faker\Factory::create('en_US');
 				</div>
 				<div class="response">
 					<h3 class="wow fadeInRight animated animated" data-wow-delay=".5s"><a name="comments">Комментарии</a></h3>
-<?php echo \yii2mod\comments\widgets\Comment::widget([
-    'model' => $model,
-]); ?>
-					<?php // if(!empty($comments)): ?>
-						<?php //foreach($comments as $comment): ?>
+
+					<?php if(!empty($comments)): ?>
+						<?php foreach($comments as $comment): ?>
 
 							<div class="media response-info">
 								<div class="media-left response-text-left wow fadeInRight animated animated" data-wow-delay=".5s">
@@ -52,24 +50,24 @@ $faker = Faker\Factory::create('en_US');
 
 									" alt="image">
 
-									<h5><?//= $comment->user->name; ?></h5>
+									<h5><?= $comment->user->name; ?></h5>
 								</div>
 
 								<div class="media-body response-text-right">
-									<p class="wow fadeInRight animated animated" data-wow-delay=".5s"><?//= $comment->text; ?></p>
+									<p class="wow fadeInRight animated animated" data-wow-delay=".5s"><?= $comment->text; ?></p>
 									<ul class="wow fadeInRight animated animated" data-wow-delay=".5s">
-										<li><?//= $comment->getDate(); ?></li>
+										<li><?= $comment->getDate(); ?></li>
 
 										<?php if(  !\Yii::$app->user->isGuest): ?>
 
-											<li><a href="#com">Ответить</a></li>
+											<!-- <li><a href="#com">Ответить</a></li> -->
 											
 											<!-- Если пользоваетль не гость и является владельцем данного комментария или данный пользователь - это админ, то он имеет право удалить комментарий -->
-											<?php //if( $comment->user->name == \Yii::$app->user->identity->name  
-											//|| !empty( Yii::$app->user->identity->isAdmin ) ): ?>
+											<?php if( $comment->user->name == \Yii::$app->user->identity->name  
+											|| !empty( Yii::$app->user->identity->isAdmin ) ): ?>
 
 											
-											<?/*= Html::a('Удалить', ['comment/delete', 'id' => $comment->id], [
+											<?= Html::a('Удалить', ['comment/delete', 'id' => $comment->id], [
 												'class' => 'btn btn-danger',
 												'data' => [
 												'confirm' => 'Вы уверены, что хотите удалить этот элемент?',
@@ -77,7 +75,7 @@ $faker = Faker\Factory::create('en_US');
 												],
 												]) ?>
 											<?php endif ?>
-										<?php endif */?>				</ul>
+										<?php endif ?>				</ul>
 
 
 										<!-- end foreach -->
@@ -107,7 +105,7 @@ $faker = Faker\Factory::create('en_US');
 								<div class="clearfix"> </div>
 							</div>
 
-						<?php //endforeach; ?>
+						<?php endforeach; ?>
 					<?php endif ?>
 
 				</div>
