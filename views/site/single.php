@@ -19,7 +19,7 @@ $faker = Faker\Factory::create('en_US');
 			<div class="left-blog left-single">
 				<div class="blog-left">
 					<div class="single-left-left wow fadeInRight animated animated" data-wow-delay=".5s">
-						<p>Статья от <a href="#"><?= $article->user->name ?></a> &nbsp;&nbsp; <?= $article->getDate() ?> &nbsp;&nbsp; <a href="#comments">(Комментариев: <?= $article->getComment()->count() ?>)</a></p>
+						<p>Статья от <a href="#"><?= $article->user->username ?></a> &nbsp;&nbsp; <?= $article->getDate() ?> &nbsp;&nbsp; <a href="#comments">(Комментариев: <?= $article->getComment()->count() ?>)</a></p>
 						<img src="<?= $article->getImage(); ?>" alt="image" />
 					</div>
 
@@ -51,7 +51,7 @@ $faker = Faker\Factory::create('en_US');
 
 									" alt="image">
 
-									<h5><?= $comment->user->name; ?></h5>
+									<h5><?= $comment->user->username; ?></h5>
 								</div>
 
 								<div class="media-body response-text-right">
@@ -64,7 +64,7 @@ $faker = Faker\Factory::create('en_US');
 											<!-- <li><a href="#com">Ответить</a></li> -->
 											
 											<!-- Если пользоваетль не гость и является владельцем данного комментария или данный пользователь - это админ, то он имеет право удалить комментарий -->
-											<?php if( $comment->user->name == \Yii::$app->user->identity->name  
+											<?php if( $comment->user->username == \Yii::$app->user->identity->name  
 											|| !empty( Yii::$app->user->identity->isAdmin ) ): ?>
 
 											

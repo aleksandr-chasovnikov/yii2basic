@@ -63,7 +63,7 @@ MyAsset::register($this);
 
               <li class="m_nav_item" id="moble_nav_item_6">
                 <a href="#" class="link link--kumya scroll">
-                  <span data-letters="<?= \Yii::$app->user->identity->name; ?>">Привет, <?= \Yii::$app->user->identity->name; ?></span>
+                  <span data-letters="<?= \Yii::$app->user->identity->username; ?>">Привет, <?= \Yii::$app->user->identity->username; ?></span>
                 </a>
               </li>
               <li class="m_nav_item" id="moble_nav_item_6">

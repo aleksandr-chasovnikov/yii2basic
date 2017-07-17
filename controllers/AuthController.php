@@ -63,7 +63,6 @@ class AuthController extends Controller
         // если сохранены данные из $_POST в модели
         if ( $model->load( 
             Yii::$app->request->post())) {
-
             //если получили объект после сохранения в БД
             if ( $user = $model->signup()) {
 
@@ -71,6 +70,9 @@ class AuthController extends Controller
                 if ( Yii::$app->getUser()->login($user)) {
 
                     return $this->goHome();
+                } else {
+                    Yii::$app->session->setFlash('error', 'Возникла ошибка при регистрации!');
+                    Yii::$app->error('Ошибка при регистрации');
                 }
             }
         }

@@ -60,7 +60,7 @@ use yii\widgets\Pjax;
           <div class="blog-left">
 
             <div class="blog-left-left wow fadeInRight animated animated" data-wow-delay=".5s">
-              <p>Статья от <a name="iakor" href="#"><?= $article->user->name ?></a> &nbsp;&nbsp; <?= $article->getDate() ?> &nbsp;&nbsp; <a href="#">(Комментариев: <?= $article->getComment()->count() ?>)</a></p>
+              <p>Статья от <a name="iakor" href="#"><?= $article->user->username ?></a> &nbsp;&nbsp; <?= $article->getDate() ?> &nbsp;&nbsp; <a href="#">(Комментариев: <?= $article->getComment()->count() ?>)</a></p>
               <a href="<?= Url::toRoute(['site/view', 'id' => $article->id]) ?>"><img src="<?= $article->getImage(); ?>" alt="image" /></a>
             </div>
 

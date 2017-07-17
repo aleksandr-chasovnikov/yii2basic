@@ -9,7 +9,7 @@ use app\models\User;
  */
 class SignupForm extends Model
 {
-    public $name;
+    public $username;
     public $email;
     public $password;
     public $repassword;
@@ -21,10 +21,10 @@ class SignupForm extends Model
     public function rules()
     {
         return [
-            ['name', 'trim'],
-            [['name', 'password'], 'required'],
-            ['name', 'unique', 'targetClass' => '\app\models\User', 'message' => 'Это имя уже существует.'],
-            ['name', 'string', 'min' => 2, 'max' => 255],
+            ['username', 'trim'],
+            [['username', 'password'], 'required'],
+            ['username', 'unique', 'targetClass' => '\app\models\User', 'message' => 'Это имя уже существует.'],
+            // ['username', 'string', 'min' => 2, 'max' => 255],
 
             ['email', 'trim'],
             ['email', 'required'],
@@ -44,8 +44,8 @@ class SignupForm extends Model
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-        // $scenarios['short_register'] = ['name', 'email'];
-        // $scenarios['short_register2'] = ['name', 'email', 'password'];
+        // $scenarios['short_register'] = ['username', 'email'];
+        // $scenarios['short_register2'] = ['username', 'email', 'password'];
 
         return $scenarios;
     }
@@ -62,10 +62,10 @@ class SignupForm extends Model
         }
         
         $user = new User();
-        $user->name = $this->name;
+        $user->username = $this->username;
         $user->email = $this->email;
         $user->setPassword($this->password);
-        // $user->generateAuthKey();
+        $user->generateAuthKey();
         
         return $user->save() ? $user : null;
     }
