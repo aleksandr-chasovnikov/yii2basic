@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Html::img($data->getImage(), ['width' => 200]);
                 }
             ],
-            'status',
+            ['attribute' => 'status', 'filter' => [0 =>'Неактивно', 1=> 'Активно']],
             // 'image',
             // 'viewed',
             // 'user_id',

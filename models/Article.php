@@ -267,6 +267,7 @@ class Article extends \yii\db\ActiveRecord
 
         // попытка оптимизации: один подготовленный запрос для разных параметров
         // $command = Yii::$app->db->createCommand('SELECT * FROM article ORDER BY :order DESC LIMIT 3')
+
         //         ->bindParam(':order', $order);
 
         // $order = 'viewed';
@@ -275,6 +276,7 @@ class Article extends \yii\db\ActiveRecord
         // $order = 'date';
         // $recent = $command->queryAll();
 
+        // $categories = Category::find()->with('articles')->all();
         $categories = Category::find()->all();
 
         return compact('popular', 'recent', 'categories');

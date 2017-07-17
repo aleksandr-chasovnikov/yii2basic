@@ -14,17 +14,44 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'title')
-        ->textInput(['maxlength' => true, 'value' => $model->title]) ?>
+    <?= $form->field($model, 'title')->widget(Widget::className(), [
+            'settings' => [
+                'lang' => 'ru',
+                'minHeight' => 10,
+                'plugins' => [
+                    'clips',
+                    'fullscreen'
+                ]
+            ],
+            'value' => $model->title
+        ]);?>
 
-    <?= $form->field($model, 'description')
-        ->textarea(['rows' => 4, 'value' => $model->description]) ?>
+    <?= $form->field($model, 'description')->widget(Widget::className(), [
+            'settings' => [
+                'lang' => 'ru',
+                'minHeight' => 100,
+                'plugins' => [
+                    'clips',
+                    'fullscreen'
+                ]
+            ],
+            'value' => $model->description
+        ]); ?>
 
-    <?= $form->field($model, 'content')
-        ->textarea(['rows' => 8, 'value' => $model->content]) ?>
+    <?= $form->field($model, 'content')->widget(Widget::className(), [
+            'settings' => [
+                'lang' => 'ru',
+                'minHeight' => 200,
+                'plugins' => [
+                    'clips',
+                    'fullscreen'
+                ]
+            ],
+            'value' => $model->content
+        ]);?>
 
     <?= $form->field($model, 'viewed')
-        ->textInput([$model->viewed]) ?>
+        ->textInput(['value' => $model->viewed]) ?>
 
     <?= $form->field($model, 'user_id')->textInput(['disabled' => 'disabled', 'value' => $model->user_id]) ?>
 

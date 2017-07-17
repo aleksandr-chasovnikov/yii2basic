@@ -19,7 +19,10 @@
         "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0",            
         "creocoder/yii2-taggable": "dev-master",
-        "yii2mod/yii2-comments": "*"
+        "yii2mod/yii2-comments": "*",
+        "dmstr/yii2-adminlte-asset": "2.*",
+        "almasaeed2010/adminlte": "~2.0",
+        "vova07/yii2-imperavi-widget": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

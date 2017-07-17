@@ -4,6 +4,8 @@
 
 use yii\widgets\LinkPager;
 use yii\helpers\Url;
+use yii\widgets\Pjax;
+
 ?>
 
 <div id="large-header" class="large-header">
@@ -47,6 +49,9 @@ use yii\helpers\Url;
         </ul>
       </div>
     </div>
+
+<?php Pjax::begin(); ?>
+
     <div class="col-md-8 blog-top-left-grid">
       <div class="left-blog">
 
@@ -84,6 +89,8 @@ use yii\helpers\Url;
         <hr>
         <hr>
       </div>
+
+<?php Pjax::end(); ?>
 
       <div class="col-md-4 blog-top-right-grid">
         <div class="comments">

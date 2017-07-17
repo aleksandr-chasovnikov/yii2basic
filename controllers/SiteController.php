@@ -27,8 +27,13 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout'],
+                'only' => ['logout', 'signup'],
                 'rules' => [
+                    [
+                        'actions' => ['signup'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
                     [
                         'actions' => ['logout'],
                         'allow' => true,
@@ -80,9 +85,9 @@ class SiteController extends Controller
             $categoryOne = null;
             
         }
-            $tags = Tag::find()
-                ->asArray()
-                ->all();;
+            // $tags = Tag::find()
+            //     ->asArray()
+            //     ->all();;
 
         //общее количество статей
         $count = $query->count();
@@ -162,10 +167,8 @@ class SiteController extends Controller
             if( $model->saveComment($id) ) {
 
                 Yii::$app->getSession()->setFlash('comment', 'Сообщение отправлено.');
-                
-                // return $this->refresh();
-                return $this->goBack( Yii::$app->request->referrer );
-                // return $this->redirect(['site/view', 'id' => $id]);
+
+            return $this->redirect($_SERVER['HTTP_REFERER']);
             }
         }
     }

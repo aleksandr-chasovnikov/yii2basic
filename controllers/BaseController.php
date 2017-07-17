@@ -133,7 +133,7 @@ abstract class BaseController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->goBack((!empty(Yii::$app->request->referrer) ? Yii::$app->request->referrer : null));
+        return $this->redirect($_SERVER['HTTP_REFERER']);
     }
 
 }

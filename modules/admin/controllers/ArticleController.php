@@ -144,6 +144,8 @@ class ArticleController extends \app\controllers\BaseController
 
         if ( $model->load(Yii::$app->request->post()) && $model->save()) {
 
+            // $count_articles = Category::find()->where(['id' => ])
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

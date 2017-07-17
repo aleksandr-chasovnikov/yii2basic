@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
+use \vova07\imperavi\Widget;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Article */
@@ -10,7 +11,7 @@ use yii\widgets\ActiveForm;
 
 
 //Тестовые данные
-$faker = Faker\Factory::create('en_US');
+// $faker = Faker\Factory::create('en_US');
 
 ?>
 
@@ -18,14 +19,38 @@ $faker = Faker\Factory::create('en_US');
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'title')
-        ->textInput(['maxlength' => true, 'value' => $faker->realText(50)]) ?>
+    <?= $form->field($model, 'title')->widget(Widget::className(), [
+            'settings' => [
+                'lang' => 'ru',
+                'minHeight' => 10,
+                'plugins' => [
+                    'clips',
+                    'fullscreen'
+                ]
+            ]
+        ]);?>
 
-    <?= $form->field($model, 'description')
-        ->textarea(['rows' => 4, 'value' => $faker->realText(400)]) ?>
+    <?= $form->field($model, 'description')->widget(Widget::className(), [
+            'settings' => [
+                'lang' => 'ru',
+                'minHeight' => 100,
+                'plugins' => [
+                    'clips',
+                    'fullscreen'
+                ]
+            ]
+        ]); ?>
 
-    <?= $form->field($model, 'content')
-        ->textarea(['rows' => 8, 'value' => $faker->realText(2000)]) ?>
+    <?= $form->field($model, 'content')->widget(Widget::className(), [
+            'settings' => [
+                'lang' => 'ru',
+                'minHeight' => 200,
+                'plugins' => [
+                    'clips',
+                    'fullscreen'
+                ]
+            ]
+        ]);?>
 
     <?= $form->field($model, 'viewed')
         ->textInput(['value' => 0]) ?>

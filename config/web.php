@@ -56,7 +56,6 @@ $config = [
             'rules' => [
             ],
         ],
-        
     ],
     'params' => $params,
 ];
@@ -71,10 +70,22 @@ if (YII_ENV_DEV) {
     ];
 
     $config['bootstrap'][] = 'gii';
+    // $config['modules']['gii'] = [
+    //     'class' => 'yii\gii\Module',
+    //     // uncomment the following to add your IP if you are not connecting from localhost.
+    //     //'allowedIPs' => ['127.0.0.1', '::1'],
+    // ];
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
-        // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
+        'class' => 'yii\gii\Module',
+        'generators' => [ //here
+        'crud' => [ // generator name
+        'class' => 'yii\gii\generators\crud\Generator', // generator class
+        'templates' => [ //setting for out templates
+        'custom' => '@app/vendor/yiisoft/yii2-gii/generators/crud/custom', // template name => path to template
+        ]
+        ]
+        ],
     ];
 }
 

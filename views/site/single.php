@@ -5,6 +5,7 @@
 use yii\helpers\Url;
 use app\models\Article;
 use yii\helpers\Html;
+use yii\widgets\Pjax;
 
 //Тестовые данные
 $faker = Faker\Factory::create('en_US');
@@ -121,7 +122,8 @@ $faker = Faker\Factory::create('en_US');
 							</div>
 						<?php endif ?>
 						
-						<?php $form = \yii\widgets\ActiveForm::begin([
+						<?php  Pjax::begin();
+						$form = \yii\widgets\ActiveForm::begin([
 							'action' =>['site/comment', 'id' => $article->id],
 							'options' =>['class' => 'wow fadeInRight animated animated', 'role' => 'form']]); ?>
 
@@ -139,11 +141,12 @@ $faker = Faker\Factory::create('en_US');
 
 							<?= $form->field($commentForm, 'comment')
 							->label('')
-							->textarea(['rows' => 6, 'placeholder' => 'Комментарий', 'value' => $faker->realText(50)]) ?>
+							->textarea(['rows' => 6, 'placeholder' => 'Комментарий']) ?>
 
 							<input type="submit" value="Отправить">
 
-							<?php \yii\widgets\ActiveForm::end(); ?>
+							<?php \yii\widgets\ActiveForm::end();
+							Pjax::end(); ?>
 
 						</div>
 

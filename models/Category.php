@@ -48,4 +48,22 @@ class Category extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Article::className(), ['category_id' => 'id']);
     }
+
+    // public static function getCountArticles()
+    // {
+    //     $category = null;
+
+    //     return Yii::$app->db->createCommand('SELECT COUNT(*) FROM article WHERE :category_id')
+    //             ->bindParam(':category_id', $category);
+
+    //     $cat = self::find()->asArray()->all();
+    //     var_dump($cat);die;
+    //       foreach ($cat as $c) {
+
+    //         $category = $c->id;
+    //         $command->queryAll();
+    //       }
+
+    //         return $categ;
+    // }
 }

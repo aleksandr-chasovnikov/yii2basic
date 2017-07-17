@@ -40,7 +40,7 @@ AppAsset::register($this);
             ['label' => 'Статьи', 'url' => ['/admin/article/index']],
             ['label' => 'Категории', 'url' => ['/admin/category/index']],
             ['label' => 'Комментарии', 'url' => ['/admin/comment/index']],
-            ['label' => 'Тэги', 'url' => ['/admin/tag/index']],
+            // ['label' => 'Тэги', 'url' => ['/admin/tag/index']],
         ],
     ]);
     NavBar::end();

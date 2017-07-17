@@ -58,7 +58,7 @@ MyAsset::register($this);
          <?php else: ?>
 
           <?php if (\Yii::$app->user->identity->isAdmin): ?>
-               <li class="m_nav_item" id="moble_nav_item_6"> <a href="/admin/article/index" class="link link--kumya scroll"><span data-letters="Админ">Админ-апнель</span></a></li>
+               <li class="m_nav_item" id="moble_nav_item_6"> <a href="/admin/article/index" class="link link--kumya scroll"><span data-letters="Админ">Админ-панель</span></a></li>
           <?php endif ?>
 
               <li class="m_nav_item" id="moble_nav_item_6">
