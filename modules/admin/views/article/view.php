@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Загрузить изображение', ['set-image', 'id' => $model->id], ['class' => 'btn btn-default']) ?>
         <?= Html::a('Изменить категорию', ['set-category', 'id' => $model->id], ['class' => 'btn btn-default']) ?>
-        <?//= Html::a('Добавить тэг', ['set-tags', 'id' => $model->id], ['class' => 'btn btn-default']) ?>
+        <?= Html::a('Добавить тэг', ['set-tags', 'id' => $model->id], ['class' => 'btn btn-default']) ?>
         <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
@@ -41,6 +41,19 @@ $this->params['breadcrumbs'][] = $this->title;
             'user_id',
             'status',
             'category_id',
+            [
+                'attribute' => 'tags',
+                'value' => function($model){
+                    $t = [];
+                    foreach ($model->tags as $tag) {
+                            $t[] =  $tag->title;
+                        }
+                        if ($t) {
+                            return implode(', ', $t);                    
+                        }
+                        return false;
+                }
+            ]
         ],
     ]) ?>
 

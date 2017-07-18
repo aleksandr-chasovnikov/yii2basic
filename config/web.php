@@ -7,6 +7,9 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'sourceLanguage'=>'en_US',
+    'language'=>'ru',
+    'charset'=>'utf-8',
     'modules' => [
         'admin' => [
             'class' => 'app\modules\admin\Module',
@@ -29,6 +32,10 @@ $config = [
             'enableAutoLogin' => true,
             'loginUrl' => ['auth/login'], //переопределили 'site/login'(по умолчанию)
         ],
+        'formatter' => [
+            'class' => 'yii\i18n\Formatter',
+            'dateFormat' => 'medium',
+        ], 
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],

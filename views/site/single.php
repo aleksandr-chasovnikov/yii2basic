@@ -64,7 +64,7 @@ $faker = Faker\Factory::create('en_US');
 											<!-- <li><a href="#com">Ответить</a></li> -->
 											
 											<!-- Если пользоваетль не гость и является владельцем данного комментария или данный пользователь - это админ, то он имеет право удалить комментарий -->
-											<?php if( $comment->user->username == \Yii::$app->user->identity->name  
+											<?php if( $comment->user->username == \Yii::$app->user->identity->username  
 											|| !empty( Yii::$app->user->identity->isAdmin ) ): ?>
 
 											

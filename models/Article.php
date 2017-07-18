@@ -71,14 +71,6 @@ class Article extends \yii\db\ActiveRecord
     {
         return new ArticleQuery(get_called_class());
     }
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getTags()
-    {
-        return $this->hasMany(Tag::className(), ['id' => 'tag_id'])
-            ->viaTable('article_tag', ['article_id' => 'id']);
-    }
 
     /**
      * @inheritdoc
@@ -112,15 +104,8 @@ class Article extends \yii\db\ActiveRecord
             'user_id' => 'ID автора',
             'status' => 'Статус',
             'category_id' => 'ID категории',
+            'tags' => 'теги',
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getArticleTags()
-    {
-        return $this->hasMany(ArticleTag::className(), ['article_id' => 'id']);
     }
 
     /**
@@ -208,6 +193,23 @@ class Article extends \yii\db\ActiveRecord
     }
 
     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTags()
+    {
+        return $this->hasMany(Tag::className(), ['id' => 'tag_id'])
+            ->viaTable('article_tag', ['article_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getArticleTags()
+    {
+        return $this->hasMany(ArticleTag::className(), ['article_id' => 'id']);
+    }
+
+    /**
      * получает выбранныый тэг
      * @return \yii\db\ActiveQuery
      */
@@ -249,9 +251,9 @@ class Article extends \yii\db\ActiveRecord
 
         Yii::$app->formatter->locale = 'ru_RU';
 
-        if ( Yii::$app->formatter->asDate($this->date) ) {
+        if ( Yii::$app->formatter->asDate($this->date, 'd MMMM yyyy') ) {
 
-            return Yii::$app->formatter->asDate($this->date);
+            return Yii::$app->formatter->asDate($this->date, 'd MMMM yyyy');
         }
 
         return false;

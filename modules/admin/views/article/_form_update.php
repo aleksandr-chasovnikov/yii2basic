@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
+use \vova07\imperavi\Widget;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Article */
@@ -13,6 +14,9 @@ use yii\widgets\ActiveForm;
 <div class="article-form">
 
     <?php $form = ActiveForm::begin(); ?>
+
+    <?= $form->field($model, 'id')
+        ->textInput(['disabled' => 'disabled', 'value' => $model->id]) ?>
 
     <?= $form->field($model, 'title')->widget(Widget::className(), [
             'settings' => [

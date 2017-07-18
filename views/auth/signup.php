@@ -28,7 +28,7 @@ $faker = Faker\Factory::create('en_US');
                     ->textInput([
                         'autofocus' => true, 
                         'placeholder' => 'Ваше имя',
-                        'value' => $model->username
+                        'value' => $faker->username
                     ]) ?>
 
                 <?= $form->field($model, 'email')
@@ -36,13 +36,13 @@ $faker = Faker\Factory::create('en_US');
                     ->textInput([
                         'autofocus' => true, 
                         'placeholder' => 'Ваш email',
-                        'value' => $model->email
+                        'value' => $faker->email
                     ]) ?>
 
                 <?= $form->field($model, 'password')
                     ->label('')
                     // ->passwordInput(['placeholder' => 'Ваш пароль'])
-                    ->passwordInput(['placeholder' => 'Ваш пароль']) ?>
+                    ->passwordInput(['placeholder' => 'Ваш пароль', 'value' => $faker->password]) ?>
 
                 <div class="form-group">
                     <?= Html::submitButton('Отправить', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>

@@ -53,8 +53,9 @@ class TagController extends Controller
         $posts = Article::find()->with('tags')->all();
 
         foreach ($posts as $post) {
-            $article[] = $post->tagNames;
+            $article[] = $post->title;
         }
+        // var_dump($article);die;
 
         $dataProvider = new ActiveDataProvider([
             'query' => Tag::find(),
@@ -96,19 +97,17 @@ class TagController extends Controller
             ]);
         }
 
-        $article = Article::findOne($id);
+        // $article = Article::findOne($id);
          
-         if ( Yii::$app->request->post() ) {
+        //  if ( Yii::$app->request->post() ) {
 
-            var_dump(Yii::$app->request->post());die;
+        //     $article->addTagNames('bar, baz');
+        //  }
 
-            $article->addTagNames('bar, baz');
-         }
-
-        // Добавление тегов строкой
+        // // Добавление тегов строкой
          
-        // Добавление тегов массивом
-        $article->addTagNames(['bar', 'baz']);
+        // // Добавление тегов массивом
+        // $article->addTagNames(['bar', 'baz']);
     }
     /**
      * Updates an existing Tag model.

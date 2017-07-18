@@ -25,11 +25,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'title',
-            [
-                'attribute' =>'articleTag',
-                'value' => 'article.article_id', //getArticleTag()->article_id
-                'filter' => $article,
-            ],
+            // [
+            //     'attribute' =>'id',
+            //     'value' => 'article.article_id', //getArticleTag()->article_id
+            //     'filter' => $article,
+            // ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

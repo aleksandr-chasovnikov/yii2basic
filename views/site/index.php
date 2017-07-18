@@ -34,6 +34,8 @@ use yii\widgets\Pjax;
    <div class="blog-top-grids">
     <div class="col-md-4 blog-top-right-grid">
       <div class="categories">
+          <h4 class="wow fadeInLeft animated animated" data-wow-delay=".5s">Курс валют: RUR/UAH: <?= get_course() ?></h4>
+          <br>
         <h3 class="wow fadeInLeft animated animated" data-wow-delay=".5s">Категории</h3>
         <ul>
 
@@ -81,15 +83,15 @@ use yii\widgets\Pjax;
         <?php endforeach; ?>
 
       </div>
-
+<?php if ($pagination):?>
       <?= LinkPager::widget([
         'pagination' => $pagination,
         ]); ?>
+<?php endif ?>
 
         <hr>
         <hr>
       </div>
-
 <?php Pjax::end(); ?>
 
       <div class="col-md-4 blog-top-right-grid">
@@ -135,16 +137,16 @@ use yii\widgets\Pjax;
           <?php endforeach; ?>
 
         </div>
-     <!--    <div class="comments">
+        <div class="comments">
           <h3 class="wow fadeInLeft animated animated" data-wow-delay=".5s">Облако тегов</h3>
 
           <div class="tags">
-            <?php //foreach($tags as $tag) : ?>
-              <a href="#"><?//= $tag['title'] ?></a>
-            <?php //endforeach; ?>
+            <?php foreach($tags as $tag) : ?>
+              <a href="<?= Url::toRoute(['tags', 'id' => $tag['id']]) ?>"><?= $tag['title'] ?></a> |
+            <?php endforeach; ?>
           </div>
 
-        </div> -->
+        </div>
       </div>
       
       <div class="clearfix"> </div>

@@ -25,6 +25,13 @@ MyAsset::register($this);
 <body>
   <?php $this->beginBody() ?>
 
+  <div class="testing-test">
+    <h3>
+      Сайт в режиме
+      <br> тестирования!
+    </h3>
+  </div>
+
   <div class="container demo-2" id="home">
     <!--carbonads-container-->
     <div class="content">
@@ -88,64 +95,22 @@ MyAsset::register($this);
 
     <!-- footer-section -->
 <footer class="footer">
-    <div class="bottom-middle">
-      <div class="bottom-middle-top">
-        <div class="container">
-          <div class="col-md-6 bottom-grid wow fadeInUp animated animated" data-wow-delay=".5s">
-            <h5>NewsLetter</h5>
-            <p>Lorem ipsum dolor sit amet, tristique nec libero. Proin vitae convallis odio. Morbi nec enim nisi. Aliquam erat volutpat. </p>
-            <form>                   
-              <input type="text" placeholder="Enter Email..." required="" />
-
-              <input type="submit" value="Submit">
-              <div class="clearfix"></div>
-            </form>
-          </div>
-          <div class="col-md-6 bottom-grid wow fadeInUp animated animated" data-wow-delay=".5s">
-            <h5>Twitter Feed</h5>
-            <p>Check out th best designs online in the world <br>at <a href="mail-to:mail@example.com">http://example.com </a></p>
-            <span>1 day ago</span>
-            <p><a href="#">Twitter</a>, may be the more visual platform for education group.</p>
-            <span>4 day ago</span>
-          </div>
-
-          <div class="clearfix"></div>
-        </div>
-      </div>
-    </div>
-    <!-- //footer-section -->
-    <div class="map-bottom">
-      <div class="col-md-4 adrs-left wow fadeInUp animated animated" data-wow-delay=".5s">
-        <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
-        <p>San Francisco, CA 94107.</p>
-      </div>
-      <div class="col-md-4 adrs-left adrs-middle wow fadeInUp animated animated" data-wow-delay=".5s">
-        <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
-        <p>+655 8654 7799 , +055 726 3845</p>
-      </div>
-      <div class="col-md-4 adrs-left adrs-right wow fadeInUp animated animated" data-wow-delay=".5s">
-        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-        <p><a href="mailto:example@email.com">mail@example.com</a></p>
-      </div>
-      <div class="clearfix"></div>
-    </div>
-    <!--//map-->
-    <!--//contact-->
 
     <!--copy-right-->
     <div class="copy">
-      <p class="wow fadeInUp animated animated" data-wow-delay=".5s">&copy; 2016 Go Easy On . All Rights Reserved | Design by <a href="http://w3layouts.com/">W3layouts</a> </p>
+      <p class="wow fadeInUp animated animated" data-wow-delay=".5s">&copy; <?= date('Y') ?> Go Easy On . Все права защищены </p>
     </div>
     <!--//copy-right-->
     <!--//footer-->
     <a href="#home" id="toTop" class="scroll" style="display: block;"> <span id="toTopHover" style="opacity: 1;"></span></a>
 
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+        <p class="pull-left">Создатель: <a href="/site/contact">Александр Часовников</a></p>
 
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>
   </footer>
+
 
   <?php $this->endBody() ?>
 </body>

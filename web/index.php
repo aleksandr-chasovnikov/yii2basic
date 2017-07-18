@@ -6,6 +6,10 @@ ini_set('display_startup_errors', 1);
 defined('YII_DEBUG') or define('YII_DEBUG', true);
 defined('YII_ENV') or define('YII_ENV', 'dev');
 
+define('LINK_COURS', 'https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=3');
+include_once (__DIR__ .'/../components/functions/get_course.php');
+
+
 require(__DIR__ . '/../vendor/autoload.php');
 require(__DIR__ . '/../vendor/yiisoft/yii2/Yii.php');
 

@@ -12,6 +12,7 @@ use app\models\ContactForm;
 use app\models\CommentForm;
 use app\models\Article;
 use app\models\Tag;
+use app\models\ArticleTag;
 use app\models\Category;
 use yii\data\Pagination;
 
@@ -85,9 +86,9 @@ class SiteController extends Controller
             $categoryOne = null;
             
         }
-            // $tags = Tag::find()
-            //     ->asArray()
-            //     ->all();;
+            $tags = Tag::find()
+                ->asArray()
+                ->all();;
 
         //общее количество статей
         $count = $query->count();
@@ -106,9 +107,61 @@ class SiteController extends Controller
                         'articles', 
                         'pagination',
                         'categoryOne',
+                        'tags',
+                        'courses'
+                    );
+
+        return $this->render('index', $result);
+    }
+
+    /**
+     * Displays about page.
+     *
+     * @return string
+     */
+    public function actionTags($id)
+    {
+        if ($id) {
+
+            $articleTag = ArticleTag::find()
+                    ->with('tag')
+                    ->where(['tag_id' => $id])
+                    ->asArray()
+                    ->all();
+
+
+            foreach ($articleTag as $v) {
+                $articles[] = Article::find()->where(['id'=> $v['article_id']])->one();
+            }
+
+            $categoryOne = null;
+            $pagination = null;
+
+            $tags = Tag::find()
+                ->asArray()
+                ->all();;
+
+        // //общее количество статей
+        // $count = $query->count();
+
+        // $pagination = new Pagination([
+        //                 'totalCount' => $count, 
+        //                 'pageSize' => 6
+        //             ]);
+
+        // $articles = $query->offset($pagination->offset)
+        //             ->limit($pagination->limit)
+        //             ->all();
+
+        // объединяем в один массив
+        $result = Article::getSideBar() + compact(
+                        'articles', 
+                        'pagination',
+                        'categoryOne',
                         'tags'
                     );
 
+        } 
         return $this->render('index', $result);
     }
 
