@@ -13,10 +13,12 @@ nbproject
 Thumbs.db
 
 # composer vendor dir
-/vendor
+yii2basic/vendor
+public_html/uploads
+public_html/GoEasyOn/images
 
 # composer itself is not needed
-composer.phar
+yii2basic/yii2basic/composer.phar
 
 # Mac DS_Store Files
 .DS_Store
