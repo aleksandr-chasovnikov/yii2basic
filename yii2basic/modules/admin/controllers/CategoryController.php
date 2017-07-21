@@ -17,4 +17,21 @@ class CategoryController extends \app\controllers\BaseController
         parent::__construct(__CLASS__, $id, $module, $config);
     }
 
+    /**
+     * 
+     */
+    public function actionCreate()
+    {
+    	parent::actionUpdate();
+    }
+    
+    /**
+     * Отключает CSRF-защиту для actionCreate()
+     */
+    public function beforeAction($action) {
+
+        $this->enableCsrfValidation = ($action->id !== "create"); 
+        return parent::beforeAction($action);
+    }
+
 }

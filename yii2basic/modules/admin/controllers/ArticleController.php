@@ -153,6 +153,18 @@ class ArticleController extends \app\controllers\BaseController
     }
 
     /**
+     * Отключает CSRF-защиту для actionCreate() и др.
+     */
+    public function beforeAction($action) {
+
+    if ($action->id !== "create" || $action->id !== "set-image") {
+
+        $this->enableCsrfValidation = false; 
+    }
+        return parent::beforeAction($action);
+    }
+
+    /**
      * Редактирование записи
      */
     public function actionUpdate($category = null, $id = null)

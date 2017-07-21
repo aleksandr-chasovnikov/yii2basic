@@ -25,12 +25,6 @@ MyAsset::register($this);
 <body>
   <?php $this->beginBody() ?>
 
-  <div class="testing-test">
-    <h3>
-      Сайт в режиме
-      <br> тестирования!
-    </h3>
-  </div>
 
   <div class="container demo-2" id="home">
     <!--carbonads-container-->
@@ -95,16 +89,10 @@ MyAsset::register($this);
 
     <!-- footer-section -->
 <footer class="footer">
-<br>
-<br>
-<br>
 
     <!--copy-right-->
     <div class="copy">
       <p class="wow fadeInUp animated animated" data-wow-delay=".5s">&copy; <?= date('Y') ?> DomKvartirka . Все права защищены </p>
-<br>
-<br>
-<br>
     </div>
     <!--//copy-right-->
     <!--//footer-->
@@ -115,11 +103,6 @@ MyAsset::register($this);
 
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>
-<br>
-<br>
-<br>
-<br>
-<br>
   </footer>
 
 

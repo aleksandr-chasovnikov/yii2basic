@@ -99,7 +99,7 @@ abstract class BaseController extends Controller
 	    	$model = new $this->model;
 	    }
 
-        if ( $model->load(Yii::$app->request->post()) && $model->save()) {
+        if ( $model->load(Yii::$app->request->post()) && $model->save(false)) {
             
             return $this->redirect(['view', 'id' => $model->id]);
         }

@@ -38,6 +38,8 @@ class CommentForm extends Model
         $comment->status = 1;
         $comment->date = date('Y-m-d');
 
+        dd($comment);
+
         return $comment->save();
     }
 }

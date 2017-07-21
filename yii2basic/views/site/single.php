@@ -34,9 +34,9 @@ $faker = Faker\Factory::create('en_US');
 
 				</div>
 				<div class="response">
-					<h3 class="wow fadeInRight animated animated" data-wow-delay=".5s"><a name="comments">Комментарии</a></h3>
 
 					<?php if(!empty($comments)): ?>
+					<h3 class="wow fadeInRight animated animated" data-wow-delay=".5s"><a name="comments">Комментарии</a></h3>
 						<?php foreach($comments as $comment): ?>
 
 							<div class="media response-info">
@@ -122,7 +122,7 @@ $faker = Faker\Factory::create('en_US');
 							</div>
 						<?php endif ?>
 						
-						<?php  Pjax::begin();
+						<?php 
 						$form = \yii\widgets\ActiveForm::begin([
 							'action' =>['site/comment', 'id' => $article->id],
 							'options' =>['class' => 'wow fadeInRight animated animated', 'role' => 'form']]); ?>
@@ -146,7 +146,7 @@ $faker = Faker\Factory::create('en_US');
 							<input type="submit" value="Отправить">
 
 							<?php \yii\widgets\ActiveForm::end();
-							Pjax::end(); ?>
+						 ?>
 
 						</div>
 

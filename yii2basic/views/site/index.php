@@ -7,6 +7,13 @@ use yii\helpers\Url;
 use yii\widgets\Pjax;
 
 ?>
+  <div class="testing-test">
+    <h3>
+      Сайт в режиме
+      <br> тестирования!
+    </h3>
+  </div>
+
 
 <div id="large-header" class="large-header">
   <canvas id="demo-canvas"></canvas>
@@ -52,8 +59,6 @@ use yii\widgets\Pjax;
       </div>
     </div>
 
-<?php Pjax::begin(); ?>
-
     <div class="col-md-8 blog-top-left-grid">
       <div class="left-blog">
 
@@ -92,7 +97,7 @@ use yii\widgets\Pjax;
         <hr>
         <hr>
       </div>
-<?php Pjax::end(); ?>
+
 
       <div class="col-md-4 blog-top-right-grid">
         <div class="comments">

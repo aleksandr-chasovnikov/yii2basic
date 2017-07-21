@@ -24,6 +24,8 @@ class AuthController extends Controller
      */
     public function actionLogin()
     {
+        
+        // echo 'dfdf';die;
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -31,7 +33,7 @@ class AuthController extends Controller
         $model = new LoginForm();
         
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            
+                    
             return $this->goHome();
         }
         return $this->render('login', [

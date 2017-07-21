@@ -11,7 +11,7 @@ $this->title = 'Регистрация';
 $this->params['breadcrumbs'][] = $this->title;
 
 //Тестовые данные
-$faker = Faker\Factory::create('en_US');
+// $faker = Faker\Factory::create('en_US');
 
 ?>
 <div class="site-signup">
@@ -28,7 +28,7 @@ $faker = Faker\Factory::create('en_US');
                     ->textInput([
                         'autofocus' => true, 
                         'placeholder' => 'Ваше имя',
-                        'value' => $faker->username
+                        'value' => $model->username
                     ]) ?>
 
                 <?= $form->field($model, 'email')
@@ -36,13 +36,13 @@ $faker = Faker\Factory::create('en_US');
                     ->textInput([
                         'autofocus' => true, 
                         'placeholder' => 'Ваш email',
-                        'value' => $faker->email
+                        'value' => $model->email
                     ]) ?>
 
                 <?= $form->field($model, 'password')
                     ->label('')
                     // ->passwordInput(['placeholder' => 'Ваш пароль'])
-                    ->passwordInput(['placeholder' => 'Ваш пароль', 'value' => $faker->password]) ?>
+                    ->passwordInput(['placeholder' => 'Ваш пароль']) ?>
 
                 <div class="form-group">
                     <?= Html::submitButton('Отправить', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
@@ -53,3 +53,8 @@ $faker = Faker\Factory::create('en_US');
         </div>
     </div>
 </div>
+<br>
+<br>
+<br>
+<br>
+<br>

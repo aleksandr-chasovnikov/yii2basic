@@ -28,15 +28,15 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
+                // 'only' => ['logout', 'signup'],
                 'rules' => [
                     [
-                        'actions' => ['signup'],
+                        'actions' => ['signup', 'login', 'index', 'view', 'contact', 'comment', 'tags', 'about'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout', 'index', 'view', 'contact', 'comment', 'tags', 'about'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -107,8 +107,7 @@ class SiteController extends Controller
                         'articles', 
                         'pagination',
                         'categoryOne',
-                        'tags',
-                        'courses'
+                        'tags'
                     );
 
         return $this->render('index', $result);

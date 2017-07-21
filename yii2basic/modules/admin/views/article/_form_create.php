@@ -11,7 +11,7 @@ use \vova07\imperavi\Widget;
 
 
 //Тестовые данные
-$faker = Faker\Factory::create('en_US');
+// $faker = Faker\Factory::create('en_US');
 
 ?>
 
@@ -19,14 +19,38 @@ $faker = Faker\Factory::create('en_US');
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'title')->textInput([ 'value' => $faker->realText(20),])?>
+    <?= $form->field($model, 'title')->widget(Widget::className(), [
+            'settings' => [
+                'lang' => 'ru',
+                'minHeight' => 10,
+                'plugins' => [
+                    'clips',
+                    'fullscreen'
+                ]
+            ],
+        ]);?>
 
-    <?= $form->field($model, 'description')->textInput([ 'value' => $faker->realText(400),]) ?>
+    <?= $form->field($model, 'description')->widget(Widget::className(), [
+            'settings' => [
+                'lang' => 'ru',
+                'minHeight' => 100,
+                'plugins' => [
+                    'clips',
+                    'fullscreen'
+                ]
+            ],
+        ]); ?>
 
-    <?= $form->field($model, 'content')->textInput([ 'value' => $faker->realText(1000),])?>
-
-    <?= $form->field($model, 'viewed')
-        ->textInput(['value' => 0]) ?>
+    <?= $form->field($model, 'content')->widget(Widget::className(), [
+            'settings' => [
+                'lang' => 'ru',
+                'minHeight' => 200,
+                'plugins' => [
+                    'clips',
+                    'fullscreen'
+                ]
+            ],
+        ]);?>
 
     <?= $form->field($model, 'user_id')->textInput(['disabled' => 'disabled', 'value' => \Yii::$app->user->identity->id]) ?>
 
